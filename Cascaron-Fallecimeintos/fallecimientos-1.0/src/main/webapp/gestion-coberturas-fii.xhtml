@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>SIAS-Coberturas</title>
+        
+        <style>
+            #logo_sias {
+                background: no-repeat;
+                padding: 0px;
+                position: absolute;
+                top: 25px;
+                left:  70px;
+                border-radius: 5px;
+            }
+            
+            .sistema {
+                position: absolute;
+                top: 41px;
+                left: 187px;
+            }
+            
+            p.sias{
+                font-size: .8em;
+            }
+            
+            .modulos {
+                position: absolute;
+                background-color: #8eb4e3;
+                top: 155px;
+                left: 21px;
+                width: 1280px;
+            }
+            
+            #logout{
+                position: absolute;
+                top: 118px;
+                right: 125px;
+                height: 35px;
+            }
+            
+            .date {
+                position: absolute;
+                font-family: arial;
+                font-size: .9em;
+                display:inline-block;
+                color:#444;
+                border:1px solid #CCC;
+                background:#DDD;
+                box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+                vertical-align:middle;
+                padding: 5px;
+                top: 15px;
+                right: 43px;
+                width: 75px;
+            }
+            
+            .time{
+                position: absolute;
+                font-family: arial;
+                font-size: .9em;
+                display:inline-block;
+                color:#444;
+                border:1px solid #CCC;
+                background:#DDD;
+                box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+                vertical-align:middle;
+                width: 75px;
+                padding: 5px;
+                text-align: center;
+                top: 50px;
+                right: 43px;
+            }
+            
+            #clock{
+                background: no-repeat;
+                padding: 0px;
+                position: absolute;
+                left: 1120px;
+                top: 25px;
+            }
+            
+            .button{
+                position: absolute;
+                width: 60px;
+                height: 30px;
+                font-size: 0.9em;
+                top: 120px;
+                right: 60px;
+                
+            }
+            
+            .usuario{
+                position: absolute;
+                font-size: 0.9em;
+                top: 100px;
+                right: 20px;
+                color: #003980;
+            }
+            
+            #b_activo{
+                position: absolute;
+                top: 95px;
+                left: 15px;
+            }
+            
+            #b_inactivo{
+                position: absolute;
+                top: 100px;
+                left: 195px;
+            }
+            
+            #ref:link, #ref:visited {
+                color: aliceblue;
+                padding: 14px 25px;
+                text-align: center;
+                text-decoration: underline;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 0.8em;
+            }
+            
+            #ref:hover{
+                color: darkcyan;
+            }
+            
+            .link_cobertura{
+                position: absolute;
+                top: 110px;
+                left: 2px; 
+            }
+            
+            .link_reclamo{
+                position: absolute;
+                top: 110px;
+                left: 185px;
+            }
+            
+            .menuitem{
+                background-color: #add0ea;
+                width: 205px !important;
+            }
+            
+            .menu{
+                position: absolute;
+                top: 195px;
+                left: 40px;
+                font-size: .85em;
+            }
+            
+            p.descripcion{
+                position: absolute;
+                font-size: 1em;
+                font-weight: bold;
+                top: 190px;
+                right: 180px;
+                line-height: 1.5;
+            }
+            
+            .adjuntar{
+                position: absolute;
+                top: 320px;
+                right: 330px;
+                height: 30px;
+                width: 27px;
+                background-color: transparent;
+                border-color: #003980;
+                background-image: url('resources/css/clip.png');
+                background-repeat: no-repeat;
+                background-size: 25px;
+            }
+            
+            .aceptar{
+                position: absolute;
+                top: 318px;
+                right: 220px;
+                height: 31px;
+                width: 100px;
+                background-image: url('resources/css/aceptar.png');
+                background-size: 100px;
+                background-position: center;
+            }
+            
+            .cancelar{
+                position: absolute;
+                top: 317px;
+                right: 110px;
+                height: 31px;
+                width: 100px;
+                background-image: url('resources/css/cancelar.png');
+                background-size: 100px;
+                background-position: center;
+            }
+            
+            .upload{
+                position: absolute;
+                max-width: 850px;
+                top: 280px;
+                left: 400px;
+            }
+
+            /* adjust the padding of all buttons inside the file upload button bar */
+            .ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
+                font-size: 0.9em;
+            }
+
+            /* unstyle the file upload button bar background */
+            .ui-fileupload-buttonbar.ui-widget-header {
+                background-color: #70a3ca;
+            }
+            
+            h.correcto{
+                font-size: 1em;
+                font-weight: bold;
+            }
+            
+            h.archivo{
+                font-size: 1em;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+            
+            h.registros{
+                font-size: 1em;
+                font-weight: bold;
+                text-decoration: underline;
+                color: #003980;
+            }
+            
+        </style>
+        
+        <script type="text/javascript">
+            function start(){
+                renderDate();
+                renderTime();
+            }
+        </script>
+        
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'></link>
+            
+        
+    </h:head>
+        <img id="logo_sias" src="resources/css/logo.png" width="110" height="45"/>
+        <img id="clock" src="resources/css/clock.png"/>
+        <img id="logout" src="resources/css/logout.png"/>
+        <img id="b_activo" src="resources/css/boton_activo.png"/>
+        <img id="b_inactivo" src="resources/css/boton_inactivo.png"/>
+    <h:body onload="start();">
+        <div class="sistema">
+            <p class="sias">Sistema Integral de Administración del Seguro de Crédito del FONACOT</p>
+        </div>
+        <div class="modulos">
+            Gestión de Coberturas > Reclamos por fallecimiento, invalidez e incapacidad
+        </div>
+        <div class="link_cobertura">
+            <a id="ref" href="gestion-coberturas.xhtml" >Gestión de Coberturas</a>
+        </div>
+        <div class="link_reclamo">
+            <a id="ref" href="modulos.xhtml">Conciliar Reclamos</a>
+        </div>
+        
+        <script type="text/javascript" src="resources/js/date.js"/>
+        <script type="text/javascript" src="resources/js/time.js"/>
+        
+        <div id="dateDisplay" class="date"/>
+        <div id="timeDisplay" class="time"/>
+        
+        <h:form>
+            <p:commandButton value="Salir" 
+                             action="#{cierraSesion.cierra()}" 
+                             styleClass="button"/>
+                <h:outputFormat value="#{iniciaSesion.getTipoUsuario()}" styleClass="usuario" />
+        </h:form>
+        
+        <div class="menu">
+            <h:form>
+                <p:growl id="messages" showDetail="false"/>
+                <p:menu class="menuitem">
+                    <p:submenu label="Gestión de Coberturas">
+                        <p:menuitem value="Reclamo por desempleo" icon="ui-icon-radio-off"/>
+                        <p:menuitem id="nada" value="Relamos por fallecimiento,&#10;invalidez e incapacidad" 
+                                    style="white-space: pre;" icon="ui-icon-radio-off">
+                                    <f:ajax execute = "nada" render = "sube_archivo" />
+                            </p:menuitem>
+                        <p:menuitem value="Reclamo de Atención a&#10;Clientes" style="white-space: pre;" 
+                                    icon="ui-icon-radio-off"/>
+                        <p:menuitem value="Integrar Reclamo" icon="ui-icon-radio-off"/>
+                        <p:menuitem value="Enviar reclamo mensual" icon="ui-icon-radio-off"/>
+                        <p:menuitem value="Reportes" icon="ui-icon-radio-off"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </div>
+        
+        <h:form id="sube_archivo">
+            <p class="descripcion" ><i class='fas fa-angle-right'></i>  Cargar archivo (layout) para integrar
+                reclamos por la cobertura de fallecimientos,<br/>   invalidez e incapacidad:
+            </p>
+        </h:form>
+        
+        <h:form enctype="multipart/form-data">
+            <p:growl id="messages" showDetail="true" />
+            <p:fileUpload value="#{uploadFile.file}" mode="advanced"
+                          fileUploadListener="#{uploadFile.handleFileUpload}" 
+                          dragDropSupport="true" fileLimit="1" allowTypes="/(\.|\/)(csv)$/" 
+                          label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" 
+                          fileLimitMessage="Ha excedido el límite de archivos (1)" 
+                          invalidFileMessage="No se encontró el formato correcto (.csv) en:"
+                          sizeLimit="500000" class="upload" update="exito"/>
+        </h:form>
+        
+        <p:dialog widgetVar="io_error" showEffect="fade" closable="false" resizable="true" modal="true">
+             <h:form>
+                <h:outputText value="Algo salió mal... Intente de nuevo."/>
+                <br/>
+                <br/>
+                <div align="center">
+                    <p:commandButton value="Continuar" action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog id="exito" widgetVar="exitoso" showEffect="fade" closable="false" resizable="true" modal="true">
+             <h:form>
+                 <h:outputText value="#{uploadFile.getNumRegistros()}"/>
+                <br/>
+                <br/>
+                <div align="center">
+                    <p:commandButton value="Continuar" action="gestion-coberturas-fii_soporte.xhmtl?faces-redirect=true"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog widgetVar="formato_incorrecto" showEffect="fade" closable="false" resizable="true" modal="true">
+             <h:form>
+                <h:outputText value="El formato del layout es incorrecto. &lt;br /&gt; 
+                                     Por favor reviselo e intente de nuevo." escape="false"/>
+                <br/>
+                <br/>
+                <div align="center"> 
+                    <p:commandButton value="Continuar" action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+    </h:body>
+</html>

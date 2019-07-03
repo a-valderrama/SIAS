@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SIAS</title>
+        
+        <style>
+            .centered {
+                position: absolute;
+                left: 30%;
+                top: 30%;
+                font-size: 18px;
+            }
+            
+            .acceso {
+                position: absolute;
+                background-color: #8eb4e3;
+                top: 155px;
+                left: 10px;
+                width: 1280px;
+            }
+            
+            .sistema {
+                position: absolute;
+                top: 85px;
+                left: 30px;
+            }
+            
+            p.sias{
+                font-size: .8em;
+            }
+            
+            h1{
+                font-family: "Arial", Times, serif;
+                font-style: italic;
+                font-size: 1.5em;
+            }
+            
+            #logo_sias {
+                background: no-repeat;
+                padding: 0px;
+                position: absolute;
+                top: 40px;
+                left: 120px;
+                border-radius: 5px;
+            }
+            
+            #logo_fonacot {
+                background: no-repeat;
+                padding: 0px;
+                position: absolute;
+                top: 25px;
+                right: 150px;
+                border-radius: 5px;
+            }
+            
+            #login {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            #login td, #login th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #login tr:nth-child(even){background-color: #f2f2f2;}
+
+            #login tr:hover {background-color: #ddd;}
+
+            #login th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+    </h:head>
+    
+    <img id="logo_sias" src="resources/css/logo.png" width="110" height="45"/>
+    <img id="logo_fonacot" src="resources/css/fonacot.jpg" width="180" height="60"/>
+    
+    <h:body>
+        <div class="sistema">
+            <p class="sias">Sistema Integral de Administración del Seguro de Crédito del FONACOT</p>
+        </div>
+        <div class="acceso">
+            Acceso al sitio
+        </div>
+        <div class="centered">
+            
+            <h:form id="myForm">
+                <table>
+                    <tr><td>
+                            <p:messages id="messages" autoUpdate="true" closable="true" />
+                        </td></tr>
+                </table>
+                <table id="login">
+                    <tr>
+                        <td>Usuario:</td>
+                        <td><p:inputText value="#{iniciaSesion.usuario}"
+                                         required="true"
+                                         id="usuario"
+                                         size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña:</td>
+                        <td><p:password value="#{iniciaSesion.pwd}"
+                                        required="true"
+                                        id="pwd"
+                                        size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <p:commandButton value="Iniciar"
+                                             action="#{iniciaSesion.inicia()}"/>
+                            <p:commandButton value="Limpiar"
+                                             update="myForm"
+                                             process="@this">
+                                <p:resetInput target="myForm" />
+                            </p:commandButton>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+        </div>
+    </h:body>
+</html>
