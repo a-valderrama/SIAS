@@ -1,0 +1,209 @@
+/*Para módulos*/
+#logo_sias {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 40px;
+    left:  120px;
+    border-radius: 5px;
+}
+
+/*Para la vista con funcionalidades*/
+#logo_sias_usuario {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 25px;
+    left:  70px;
+    border-radius: 5px;
+}
+
+/*Para la vista con funcionalidades*/
+.sistema_usuario {
+    position: absolute;
+    top: 41px;
+    left: 187px;
+}
+
+/*Para módulos*/
+.sistema {
+    position: absolute;
+    top: 85px;
+    left: 30px;
+}
+
+p.sias{
+    font-size: .8em;
+}
+
+.seccion {
+    position: absolute;
+    background-color: #8eb4e3;
+    top: 155px;
+    left: 10px;
+    width: 1280px;
+}
+
+#logout{
+    position: absolute;
+    top: 118px;
+    right: 125px;
+    height: 35px;
+}
+
+.date {
+    position: absolute;
+    font-family: arial;
+    font-size: .9em;
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    padding: 5px;
+    top: 15px;
+    right: 43px;
+    width: 75px;
+}
+
+.time{
+    position: absolute;
+    font-family: arial;
+    font-size: .9em;
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    width: 75px;
+    padding: 5px;
+    text-align: center;
+    top: 50px;
+    right: 43px;
+}
+
+#clock{
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    left: 1120px;
+    top: 25px;
+}
+
+.button{
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    font-size: 0.9em;
+    top: 120px;
+    right: 60px;
+}
+
+.usuario{
+    position: absolute;
+    font-size: 0.9em;
+    top: 100px;
+    right: 20px;
+    color: #003980;
+}
+
+#logo_fonacot {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 28px;
+    right: 230px;
+    border-radius: 5px;
+}
+
+/*Para módulos*/
+#g_coberturas {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 230px;
+    left: 380px;
+    border-radius: 5px;
+}
+
+#c_reclamo {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 230px;
+    right: 400px;
+    border-radius: 5px;
+}
+/*Para módulos*/
+
+/*Para la vista con funcionalidades*/
+.link_cobertura{
+    position: absolute;
+    top: 110px;
+    left: 2px; 
+}
+
+.link_reclamo{
+    position: absolute;
+    top: 110px;
+    left: 185px;
+}
+
+#b_activo{
+    position: absolute;
+    top: 95px;
+    left: 15px;
+}
+
+#b_inactivo{
+    position: absolute;
+    top: 100px;
+    left: 195px;
+}
+
+.menuitem{
+    background-color: #add0ea;
+    width: 205px !important;
+}
+
+.menu{
+    position: absolute;
+    top: 195px;
+    left: 40px;
+    font-size: .85em;
+}
+
+#ref:link, #ref:visited {
+    color: aliceblue;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 0.8em;
+}
+
+#ref:hover{
+    color: darkcyan;
+}
+
+p.descripcion{
+    position: absolute;
+    font-size: 1em;
+    font-weight: bold;
+    top: 190px;
+    right: 180px;
+    line-height: 1.5;
+}
+
+p.descripcion_soporte{
+    position: absolute;
+    font-size: .95em;
+    font-weight: bold;
+    top: 320px;
+    left: 350px;
+    line-height: 1.5;
+}
+/*Para la vista con funcionalidades*/

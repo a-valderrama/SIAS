@@ -1,0 +1,71 @@
+.centered {
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    font-size: 18px;
+}
+
+.acceso {
+    position: absolute;
+    background-color: #8eb4e3;
+    top: 155px;
+    left: 10px;
+    width: 1280px;
+}
+
+.sistema {
+    position: absolute;
+    top: 85px;
+    left: 30px;
+}
+
+p.sias{
+    font-size: .8em;
+}
+
+h1{
+    font-family: "Arial", Times, serif;
+    font-style: italic;
+    font-size: 1.5em;
+}
+
+#logo_sias {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 40px;
+    left: 120px;
+    border-radius: 5px;
+}
+
+#logo_fonacot {
+    background: no-repeat;
+    padding: 0px;
+    position: absolute;
+    top: 25px;
+    right: 150px;
+    border-radius: 5px;
+}
+
+#login {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#login td, #login th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#login tr:nth-child(even){background-color: #f2f2f2;}
+
+#login tr:hover {background-color: #ddd;}
+
+#login th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

@@ -8,230 +8,11 @@
     
     <h:head>
         <title>SIAS-Coberturas</title>
-        
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel = "stylesheet" href = "resources/css/baseUsuarioIH.css" />
         <style>
-            #logo_sias {
-                background: no-repeat;
-                padding: 0px;
-                position: absolute;
-                top: 25px;
-                left:  70px;
-                border-radius: 5px;
-            }
-            
-            .sistema {
-                position: absolute;
-                top: 41px;
-                left: 187px;
-            }
-            
-            p.sias{
-                font-size: .8em;
-            }
-            
-            .modulos {
-                position: absolute;
-                background-color: #8eb4e3;
-                top: 155px;
-                left: 21px;
-                width: 1280px;
-            }
-            
-            #logout{
-                position: absolute;
-                top: 118px;
-                right: 125px;
-                height: 35px;
-            }
-            
-            .date {
-                position: absolute;
-                font-family: arial;
-                font-size: .9em;
-                display:inline-block;
-                color:#444;
-                border:1px solid #CCC;
-                background:#DDD;
-                box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-                vertical-align:middle;
-                padding: 5px;
-                top: 15px;
-                right: 43px;
-                width: 75px;
-            }
-            
-            .time{
-                position: absolute;
-                font-family: arial;
-                font-size: .9em;
-                display:inline-block;
-                color:#444;
-                border:1px solid #CCC;
-                background:#DDD;
-                box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-                vertical-align:middle;
-                width: 75px;
-                padding: 5px;
-                text-align: center;
-                top: 50px;
-                right: 43px;
-            }
-            
-            #clock{
-                background: no-repeat;
-                padding: 0px;
-                position: absolute;
-                left: 1120px;
-                top: 25px;
-            }
-            
-            .button{
-                position: absolute;
-                width: 60px;
-                height: 30px;
-                font-size: 0.9em;
-                top: 120px;
-                right: 60px;
-                
-            }
-            
-            .usuario{
-                position: absolute;
-                font-size: 0.9em;
-                top: 100px;
-                right: 20px;
-                color: #003980;
-            }
-            
-            #b_activo{
-                position: absolute;
-                top: 95px;
-                left: 15px;
-            }
-            
-            #b_inactivo{
-                position: absolute;
-                top: 100px;
-                left: 195px;
-            }
-            
-            #ref:link, #ref:visited {
-                color: aliceblue;
-                padding: 14px 25px;
-                text-align: center;
-                text-decoration: underline;
-                font-weight: bold;
-                display: inline-block;
-                font-size: 0.8em;
-            }
-            
-            #ref:hover{
-                color: darkcyan;
-            }
-            
-            .link_cobertura{
-                position: absolute;
-                top: 110px;
-                left: 2px; 
-            }
-            
-            .link_reclamo{
-                position: absolute;
-                top: 110px;
-                left: 185px;
-            }
-            
-            .menuitem{
-                background-color: #add0ea;
-                width: 205px !important;
-            }
-            
-            .menu{
-                position: absolute;
-                top: 195px;
-                left: 40px;
-                font-size: .85em;
-            }
-            
-            p.descripcion{
-                position: absolute;
-                font-size: 1em;
-                font-weight: bold;
-                top: 190px;
-                right: 180px;
-                line-height: 1.5;
-            }
-            
-            .adjuntar{
-                position: absolute;
-                top: 320px;
-                right: 330px;
-                height: 30px;
-                width: 27px;
-                background-color: transparent;
-                border-color: #003980;
-                background-image: url('resources/css/clip.png');
-                background-repeat: no-repeat;
-                background-size: 25px;
-            }
-            
-            .aceptar{
-                position: absolute;
-                top: 318px;
-                right: 220px;
-                height: 31px;
-                width: 100px;
-                background-image: url('resources/css/aceptar.png');
-                background-size: 100px;
-                background-position: center;
-            }
-            
-            .cancelar{
-                position: absolute;
-                top: 317px;
-                right: 110px;
-                height: 31px;
-                width: 100px;
-                background-image: url('resources/css/cancelar.png');
-                background-size: 100px;
-                background-position: center;
-            }
-            
-            .upload{
-                position: absolute;
-                max-width: 850px;
-                top: 280px;
-                left: 400px;
-            }
-
-            /* adjust the padding of all buttons inside the file upload button bar */
-            .ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
-                font-size: 0.9em;
-            }
-
-            /* unstyle the file upload button bar background */
-            .ui-fileupload-buttonbar.ui-widget-header {
-                background-color: #70a3ca;
-            }
-            
-            h.correcto{
-                font-size: 1em;
-                font-weight: bold;
-            }
-            
-            h.archivo{
-                font-size: 1em;
-                font-weight: bold;
-                text-decoration: underline;
-            }
-            
-            h.registros{
-                font-size: 1em;
-                font-weight: bold;
-                text-decoration: underline;
-                color: #003980;
-            }
-            
+            /*Agregamos el estilo para la tabla en la que se muestra la información*/
             .agregarButton{
                 color: #008421 !important;
                 background-color: #8eb4e3 !important;
@@ -280,20 +61,18 @@
             }
         </script>
         
-        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'></link>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-        
     </h:head>
-        <img id="logo_sias" src="resources/css/logo.png" width="110" height="45"/>
+        <img id="logo_fonacot" src="resources/css/fonacot.jpg" width="130" height="37"/>
+        <img id="logo_sias_usuario" src="resources/css/logo.png" width="110" height="45"/>
         <img id="clock" src="resources/css/clock.png"/>
         <img id="logout" src="resources/css/logout.png"/>
         <img id="b_activo" src="resources/css/boton_activo.png"/>
         <img id="b_inactivo" src="resources/css/boton_inactivo.png"/>
     <h:body onload="start();">
-        <div class="sistema">
+        <div class="sistema_usuario">
             <p class="sias">Sistema Integral de Administración del Seguro de Crédito del FONACOT</p>
         </div>
-        <div class="modulos">
+        <div class="seccion">
             Gestión de Coberturas > Reclamos por fallecimiento, invalidez e incapacidad
         </div>
         <div class="link_cobertura">
