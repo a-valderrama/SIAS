@@ -79,7 +79,7 @@ public class UploadFile {
         String archivoExitoso = "Archivo: " + file.getFileName() + ", cargado exitosamente.";
         context.getExternalContext().getSessionMap().put("archivo", archivoExitoso);
         //generamos la dirección donde se guardará
-        String rutaString = "/home/dielsale/Documentos/SIAS/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Fii";
+        String rutaString = "/home/dielsale/Documentos/SIAS-Colab/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Fii";
         File directorio = new File(rutaString);
         //generamos el nombre
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -97,6 +97,10 @@ public class UploadFile {
             f.createNewFile();
             Path ruta = f.toPath();
             Files.copy(contenido, ruta, StandardCopyOption.REPLACE_EXISTING);
+            /*Probando validación desde groovy*/
+            CargaDatos carga = new CargaDatos();
+            carga.validaDatos(f);
+            /*Probando validación desde groovy*/
         }catch (IOException e) {
             rContext.execute("PF('io_error').show");
         }
@@ -104,81 +108,7 @@ public class UploadFile {
         cargarDatos(rutaCompleta);
     }
     
-    /*
-     * Este método extrae los datos del archivo subido por el 
-     * usuario para posteriormente poder llenar la tabla 
-     * correspondiente en la base de datos.
-     */
-    private void cargarDatos(String rutaCsv){
-        String numRegistros;
-        RequestContext rContext = RequestContext.getCurrentInstance();
-        //Establecemos el nombre y ruta del shell script
-        String rutaScript = "/home/dielsale/Documentos/SIAS/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/ShellScripts";
-        File directorio = new File(rutaScript);
-        String filename = "cargaDatos.sh";
-        String rutaCompleta = rutaScript+"/"+filename;
-        //Creamos el script
-        try{
-            if(! directorio.exists())
-                directorio.mkdir();
-            
-            File f = new File(directorio, filename);
-            f.createNewFile();
-            //Sobreescribimos el sript porque la ruta es dinamica
-            FileWriter fw=new FileWriter(rutaCompleta);
-            PrintWriter printWriter = new PrintWriter(fw);
-            /*Para esto usamos el siguiente shell, pero se puede 
-              usar el que se prefiera*/
-            printWriter.print("#!/bin/bash\n");
-            printWriter.print("dbname=\"SIAS\"\n");
-            printWriter.print("psql $dbname << EOF\n");
-            printWriter.printf("\\COPY layout(poliza,endoso,id_aseguradora,id_credito,id_trabajador,paterno,materno,nombre,"
-                + "segundo_nombre,fecha_nacimiento,sexo,rfc_trabajador,importe,empresa,domicilio_ct,tel_principal,"
-                + "tel_cel,tipo_seg_social,num_seguro_social,sucursal,producto,cobertura,id_envio,referencia_bancaria,"
-                + "fecha_baja) FROM %s DELIMITER ',' CSV HEADER;\n", rutaCsv);
-            printWriter.print("EOF");
-            printWriter.close();
-        }catch (IOException e) {
-            rContext.execute("PF('io_error').show()");
-        }
-        
-        //Ejecutamos el script
-        try {
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            /*le damos permiso de ejecucion al script. Solo necesitamos
-              darle permiso de ejecución una vez, cuando se crea el
-              archivo, pues después de eso sólo sobrescribimos.*/
-            processBuilder.command("chmod", "+x", rutaCompleta);
-            Process p = processBuilder.start();
-            //ejecutamos el script
-            processBuilder.command(rutaCompleta);
-            Process process = processBuilder.start();
-            //verificamos el output de la ejecución del comando
-            StringBuilder output = new StringBuilder();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line);
-            }
 
-            int exitVal = process.waitFor();
-            if (exitVal == 0 && !(output.toString().equals(""))) {
-                //numero de registros cargados exitosamente
-                numRegistros = output.toString().substring(5);
-                numRegistros = "Se han cargado " + numRegistros + " registros exitosamente.";
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
-                rContext.execute("PF('exitoso').show()");
-            }else{
-                rContext.execute("PF('formato_incorrecto').show()");
-            }
-        } catch (IOException e) {
-		e.printStackTrace();
-	} catch (InterruptedException e) {
-		e.printStackTrace();
-	}
-    }
     
     /**
      * Con este método estamos guardando el id del elemento
@@ -239,6 +169,96 @@ public class UploadFile {
         }
     }
     
+    /**
+     * Regresa el id del elemento del layout en custión
+     * 
+     * @return el id del elemento del layout en custión
+     */
+    public String getNumRegistros(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String id = (String)context.getExternalContext().getSessionMap().get("numRegistros");
+        return id;
+    }
+    
+
+    
+    /*
+     * Este método extrae los datos del archivo subido por el 
+     * usuario para posteriormente poder llenar la tabla 
+     * correspondiente en la base de datos.
+     */
+    private void cargarDatos(String rutaCsv){
+        String numRegistros;
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        //Establecemos el nombre y ruta del shell script
+        String rutaScript = "/home/dielsale/Documentos/SIAS-Colab/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/ShellScripts";
+        File directorio = new File(rutaScript);
+        String filename = "cargaDatos.sh";
+        String rutaCompleta = rutaScript+"/"+filename;
+        //Creamos el script
+        try{
+            if(! directorio.exists())
+                directorio.mkdir();
+            
+            File f = new File(directorio, filename);
+            f.createNewFile();
+            //Sobreescribimos el sript porque la ruta es dinamica
+            FileWriter fw=new FileWriter(rutaCompleta);
+            PrintWriter printWriter = new PrintWriter(fw);
+            /*Para esto usamos el siguiente shell, pero se puede 
+              usar el que se prefiera*/
+            printWriter.print("#!/bin/bash\n");
+            printWriter.print("dbname=\"SIAS\"\n");
+            printWriter.print("psql $dbname << EOF\n");
+            printWriter.printf("\\COPY layout(poliza,endoso,id_aseguradora,id_credito,id_trabajador,paterno,materno,nombre,"
+                + "segundo_nombre,fecha_nacimiento,sexo,rfc_trabajador,importe,empresa,domicilio_ct,tel_principal,"
+                + "tel_cel,tipo_seg_social,num_seguro_social,sucursal,producto,cobertura,id_envio,referencia_bancaria,"
+                + "fecha_baja,suma_reclamospag,suma_aseguradoratot,fecha_inicio_recl,fecha_primervto,plazo,tipo_movimiento,"
+                + "fecha_inicio,fecha_vto_final,max_r_pagadas,actuales) FROM %s DELIMITER ',' CSV HEADER;\n", rutaCsv);
+            printWriter.print("EOF");
+            printWriter.close();
+        }catch (IOException e) {
+            rContext.execute("PF('io_error').show()");
+        }
+        
+        //Ejecutamos el script
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            /*le damos permiso de ejecucion al script. Solo necesitamos
+              darle permiso de ejecución una vez, cuando se crea el
+              archivo, pues después de eso sólo sobrescribimos.*/
+            processBuilder.command("chmod", "+x", rutaCompleta);
+            Process p = processBuilder.start();
+            //ejecutamos el script
+            processBuilder.command(rutaCompleta);
+            Process process = processBuilder.start();
+            //verificamos el output de la ejecución del comando
+            StringBuilder output = new StringBuilder();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line);
+            }
+
+            int exitVal = process.waitFor();
+            if (exitVal == 0 && !(output.toString().equals(""))) {
+                //numero de registros cargados exitosamente
+                numRegistros = output.toString().substring(5);
+                numRegistros = "Se han cargado " + numRegistros + " registros exitosamente.";
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
+                rContext.execute("PF('exitoso').show()");
+            }else{
+                rContext.execute("PF('formato_incorrecto').show()");
+            }
+        } catch (IOException e) {
+		e.printStackTrace();
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+    }
+    
     /*
      * Regresa el id del elemento del layout en custión
      */
@@ -247,13 +267,5 @@ public class UploadFile {
         int id = (int)context.getExternalContext().getSessionMap().get("id_layout");
         return id;
     }
-    
-    /*
-     * Regresa el id del elemento del layout en custión
-     */
-    public String getNumRegistros(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        String id = (String)context.getExternalContext().getSessionMap().get("numRegistros");
-        return id;
-    }
 }
+

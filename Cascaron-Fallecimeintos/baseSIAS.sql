@@ -35,7 +35,7 @@ CREATE TABLE layout(
 	referencia_bancaria double precision NOT NULL,
 	fecha_baja varchar NOT NULL,
 	suma_reclamospag double precision NOT NULL,
-	suma_aseguradoratot int NOT NULL,
+	suma_aseguradoratot double precision NOT NULL,
 	fecha_inicio_recl varchar (15) NOT NULL,
 	fecha_primervto varchar (15) NOT NULL,
 	plazo int NOT NULL,
