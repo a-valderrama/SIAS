@@ -1,11 +1,22 @@
-CREATE TABLE administrador(
+CREATE TABLE usuario(
 	usuario varchar(200) UNIQUE NOT NULL,
 	contraseña varchar(30) NOT NULL,
-	CONSTRAINT "PK_administrador" PRIMARY KEY (usuario)
+	tipo varchar(15) NOT NULL,
+	CONSTRAINT "PK_usuario" PRIMARY KEY (usuario)
 );
 
-COMMENT ON TABLE administrador IS 'Administradores autorizados en en sistema. La llave primaria es el nombre del usuario, por lo que no podrá haber usuarios iguales';
+COMMENT ON TABLE usuario IS 'Usuarios autorizados en el sistema. La llave primaria es el nombre del usuario, por lo que no podrá haber usuarios iguales';
 
+CREATE TABLE bitacora(
+	id_bitacora serial,
+	usuario varchar(200) NOT NULL,
+	accion varchar(35) NOT NULL,
+	acceso varchar(25) NOT NULL,
+	CONSTRAINT "PK_bitacora" PRIMARY KEY (id_bitacora),
+	CONSTRAINT "FK_bitacora_uduario" FOREIGN KEY (usuario) REFERENCES usuario(usuario)
+);
+
+COMMENT ON TABLE bitacora IS 'Tabla en la que se registrará los accesos del usuario.';
 
 CREATE TABLE layout(
 	id serial,
