@@ -9,35 +9,20 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos, 
- * y viceversa, utilizando las queries de hibernate.
- * Es decir, nos da todas las utilidades necesarias
- * que deben tener los usuarios en la vista.
- * 
- * @author a-valderrama
+ *
+ * @author dielsale
  */
-public class UtilidadUsuario {
+public class UtilidadBitacora {
     
-    static Usuario userObj;
+    static Layout comObj;
     static Session sessionObj;
     
-    /**
-     * Método que busca al comentarista con el nombre de 
-     * usuario, pasado como parámetro, en la base de datos
-     * 
-     * @param usuario Nombre del usuario que buscamos
-     * @return Usuario wrapper completo del usuario
-     */
-    public Usuario buscaPorUsuario(String usuario) {
+    public void actualizaAcceso(Bitacora nuevoRegistro){
         try {
             sessionObj = HibernateUtil.getSessionFactory().openSession();
             sessionObj.beginTransaction();
-            String hql = "FROM Usuario u WHERE u.usuario = :usuario";
-            Query query = sessionObj.createQuery(hql);
-            query.setString("usuario",usuario);
-            Usuario u = (Usuario)query.uniqueResult();
+            sessionObj.save(nuevoRegistro);
             sessionObj.getTransaction().commit();
-            return u;
         } catch (Exception sqlException) {
             if (null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......");
@@ -49,6 +34,5 @@ public class UtilidadUsuario {
                 sessionObj.close();
             }
         }
-        return null;
     }
 }

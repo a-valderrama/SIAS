@@ -7,18 +7,27 @@ package dielsale.sias.controlador;
 
 /**
  * Esta clase la usamos para tener acceso a los 
- * atributos del usuario desde la vista
+ * atributos de la bitácora desde la vista
  * 
  * @author a-valderrama
- * 
  */
-public class Usuario {
+public class Bitacora {
+    
+    private String id;
     
     private String usuario;
     
-    private String contrasenia;
+    private String accion;
     
-    private String tipo;
+    private String acceso;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUsuario() {
         return usuario;
@@ -28,19 +37,19 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
+    public String getAccion() {
+        return accion;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-    
-    public String getTipo() {
-        return tipo;
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public String getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
     }
 }

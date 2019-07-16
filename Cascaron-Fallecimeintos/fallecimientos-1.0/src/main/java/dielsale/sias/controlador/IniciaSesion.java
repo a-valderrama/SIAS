@@ -5,14 +5,15 @@
  */
 package dielsale.sias.controlador;
 
-import dielsale.sias.modelo.Administrador;
-import dielsale.sias.modelo.UtilidadAdministrador;
+import dielsale.sias.modelo.Usuario;
+import dielsale.sias.modelo.UtilidadUsuario;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import java.util.concurrent.TimeUnit;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  * Esta clase nos pertmitirá iniciar sesión
@@ -27,10 +28,10 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class IniciaSesion {
     
-    //Modelo del Administrador
-    UtilidadAdministrador uAdmin = new UtilidadAdministrador();
+    //Modelo del usuario
+    UtilidadUsuario u = new UtilidadUsuario();
     //Correo y contraseña del usuario realizando login
-    private String usuario = new String();
+    private String user = new String();
     private String pwd = new String();
     
     //Constructor por default
@@ -40,12 +41,12 @@ public class IniciaSesion {
                 .setLocale(new Locale("es-Mx"));
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUser() {
+        return user;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getPwd() {
@@ -66,16 +67,20 @@ public class IniciaSesion {
      *                después del login
      */
     public String inicia(){
-        Administrador admin = uAdmin.buscaPorUsuario(usuario);
-        if(admin != null){
-            if(admin.getContrasenia().equals(pwd)){
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.getExternalContext().getSessionMap().put("tipo_usuario", "administrador");
-                context.getExternalContext().getSessionMap().put("usuario", admin);
-                FacesContext.getCurrentInstance()
-                .addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "Se inició sesión correctamente como administrador", ""));
+        Usuario usuario = u.buscaPorUsuario(user);
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        if(usuario != null){
+            if(usuario.getTipo().trim().equals("")){
+                rContext.execute("PF('perfil').show()");
+                return "";
+            }
+            if(usuario.getContrasenia().equals(pwd)){
+                context.getExternalContext().getSessionMap().put("tipo_usuario", usuario.getTipo());
+                context.getExternalContext().getSessionMap().put("usuario", usuario.getUsuario());
+                //El acceso es correcto
+                ActualizaBitacora actualiza = new ActualizaBitacora();
+                actualiza.acceso(usuario.getUsuario());
                 try{
                     TimeUnit.SECONDS.sleep(3);
                 }catch(InterruptedException e){
@@ -83,7 +88,7 @@ public class IniciaSesion {
                 }
                 return "modulos.xhmtl?faces-redirect=true";
             }
-             else{
+            else{
                 FacesContext.getCurrentInstance()
                 .addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -91,6 +96,10 @@ public class IniciaSesion {
                 return "";
             }
         }
+        FacesContext.getCurrentInstance()
+                .addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "Usuario o contraseña incorrecto", ""));
         return "";
     }
     

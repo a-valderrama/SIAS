@@ -14,7 +14,7 @@ import org.primefaces.model.UploadedFile
 
 /**
  *
- * @author Roberto Ponce
+ * @author Roberto Ponce y a-valderrama
  */
 class CargaDatos {
     
@@ -49,7 +49,7 @@ class CargaDatos {
      */
     public void validaDatos(File file){
         try{
-            println "-----------------------------Aqui CSV-------------------------------------------"
+            //println "-----------------------------Aqui CSV-------------------------------------------"
             FileReader filereader = new FileReader(file)
             //nos saltamos la primera línea porque es el header
             CSVReader csvReader = new CSVReaderBuilder(filereader) 
@@ -72,8 +72,8 @@ class CargaDatos {
                         "\t" + esFecha(next[28]) + "\t" + esPlazo(next[29]) + "\t" + esMovimiento(next[30]) + \
                         "\t" + esFecha(next[31])+ "\t" + esFecha(next[32]) + "\t" + esNumericoNull(next[33])+\
                         "\t" + next[34]+ "\t" + esActual(next[34])
-                        )*/
-            }
+                        )
+            }*/
         }catch(Exception e){
             e.printStackTrace()
         }

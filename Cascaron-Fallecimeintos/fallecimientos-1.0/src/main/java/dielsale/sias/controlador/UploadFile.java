@@ -180,8 +180,6 @@ public class UploadFile {
         return id;
     }
     
-
-    
     /*
      * Este método extrae los datos del archivo subido por el 
      * usuario para posteriormente poder llenar la tabla 

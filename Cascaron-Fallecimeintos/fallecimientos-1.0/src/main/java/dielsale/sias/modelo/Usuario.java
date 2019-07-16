@@ -20,8 +20,8 @@ import javax.persistence.Table;
  * @author a-valderrama
  */
 @Entity
-@Table(catalog = "SIAS", schema = "public", name = "administrador")
-public class Administrador{
+@Table(catalog = "SIAS", schema = "public", name = "usuario")
+public class Usuario{
     
     @Id
     @Column(name = "usuario")
@@ -29,6 +29,9 @@ public class Administrador{
     
     @Column(name = "contraseña")
     private String contrasenia;
+    
+    @Column(name = "tipo")
+    private String tipo;
 
     public String getUsuario() {
         return usuario;
@@ -44,5 +47,13 @@ public class Administrador{
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
