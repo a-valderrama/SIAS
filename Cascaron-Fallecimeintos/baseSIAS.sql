@@ -2,6 +2,7 @@ CREATE TABLE usuario(
 	usuario varchar(200) UNIQUE NOT NULL,
 	contraseña varchar(30) NOT NULL,
 	tipo varchar(15) NOT NULL,
+	bloqueado boolean DEFAULT false,
 	CONSTRAINT "PK_usuario" PRIMARY KEY (usuario)
 );
 
@@ -13,10 +14,21 @@ CREATE TABLE bitacora(
 	accion varchar(35) NOT NULL,
 	acceso varchar(25) NOT NULL,
 	CONSTRAINT "PK_bitacora" PRIMARY KEY (id_bitacora),
-	CONSTRAINT "FK_bitacora_uduario" FOREIGN KEY (usuario) REFERENCES usuario(usuario)
+	CONSTRAINT "FK_bitacora_usuario" FOREIGN KEY (usuario) REFERENCES usuario(usuario)
 );
 
 COMMENT ON TABLE bitacora IS 'Tabla en la que se registrará los accesos del usuario.';
+
+CREATE TABLE accesos(
+	usuario varchar(200) UNIQUE NOT NULL,
+	intentos int DEFAULT 0,
+	errores int DEFAULT 0, 
+	hora_deshabilitado varchar (30),
+	CONSTRAINT "PK_accesos" PRIMARY KEY (usuario),
+	CONSTRAINT "FK_accesos_usuario" FOREIGN KEY (usuario) REFERENCES usuario(usuario)
+);
+
+COMMENT ON TABLE accesos IS 'Tabla en la que se registrará los intentos de acceso del usuario.';
 
 CREATE TABLE layout(
 	id serial,
