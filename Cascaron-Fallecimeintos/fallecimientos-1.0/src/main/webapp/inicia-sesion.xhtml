@@ -21,7 +21,7 @@
         </div>
         <div class="centered">
             
-            <h:form id="myForm">
+            <h:form id="acceso">
                 <table>
                     <tr><td>
                             <p:messages id="messages" autoUpdate="true" closable="true" />
@@ -32,6 +32,7 @@
                         <td>Usuario:</td>
                         <td><p:inputText value="#{iniciaSesion.user}"
                                          required="true"
+                                         requiredMessage="Debe llenar el campo de 'Usuario'"
                                          id="user"
                                          size="30"/></td>
                     </tr>
@@ -39,6 +40,7 @@
                         <td>Contraseña:</td>
                         <td><p:password value="#{iniciaSesion.pwd}"
                                         required="true"
+                                        requiredMessage="Debe llenar el campo de 'Contraseña'"
                                         id="pwd"
                                         size="30"/></td>
                     </tr>
@@ -47,9 +49,9 @@
                             <p:commandButton value="Iniciar"
                                              action="#{iniciaSesion.inicia()}"/>
                             <p:commandButton value="Limpiar"
-                                             update="myForm"
+                                             update="acceso"
                                              process="@this">
-                                <p:resetInput target="myForm" />
+                                <p:resetInput target="acceso" />
                             </p:commandButton>
                         </td>
                     </tr>
@@ -58,11 +60,49 @@
             
             <p:dialog widgetVar="perfil" modal="true" >
                 <h:form>
-                    <h:outputText value="No tienes un perfil configurado. Por favor contacta al administrador"/>
+                    <h:outputText value="Estimado usuario, no tiene un perfil configurado. Por favor&lt;br /&gt;
+                                        contacte al administrador." escape="false"/>
                     <br/>
                     <br/>
                     <div align="center">
-                        <p:commandButton value="Continuar" action="PF('perfil').hide()" />
+                        <p:commandButton value="Continuar" onclick="PF('perfil').hide()" />
+                    </div>
+                </h:form>
+            </p:dialog>
+            
+            <p:dialog widgetVar="5_intentos" modal="true" >
+                <h:form>
+                    <h:outputText value="Estimado usuario, ha excedido el número de intentos permitidos, &lt;br /&gt;
+                                        espere 5 minutos y vuelva a intentar.&lt;br /&gt; Si no recuerda su contraseña 
+                                        contacte al administrador." escape="false"/>
+                    <br/>
+                    <br/>
+                    <div align="center">
+                        <p:commandButton value="Continuar" onclick="PF('5_intentos').hide()" />
+                    </div>
+                </h:form>
+            </p:dialog>
+            
+            <p:dialog widgetVar="bloqueado" modal="true" >
+                <h:form>
+                    <h:outputText value="Estimado usuario, su cuenta ha sido bloqueada por seguridad. &lt;br /&gt;
+                                        Por favor contacte al administrador." escape="false"/>
+                    <br/>
+                    <br/>
+                    <div align="center">
+                        <p:commandButton value="Continuar" onclick="PF('bloqueado').hide()" />
+                    </div>
+                </h:form>
+            </p:dialog>
+            
+            <p:dialog widgetVar="deshabilitado" modal="true" >
+                <h:form>
+                    <h:outputText value="Estimado usuario, su cuenta ha sido deshabilitada por seguridad. &lt;br /&gt;
+                                        Por favor espere el tiempo indicado e intente de nuevo." escape="false"/>
+                    <br/>
+                    <br/>
+                    <div align="center">
+                        <p:commandButton value="Continuar" onclick="PF('deshabilitado').hide()" />
                     </div>
                 </h:form>
             </p:dialog>

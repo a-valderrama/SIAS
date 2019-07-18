@@ -28,7 +28,7 @@ public class Bitacora {
     @Id
     @Column(name = "id_bitacora")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id_bitacora;
+    private String idBitacora;
     
     @Column(name = "usuario")
     private String usuario;
@@ -40,11 +40,11 @@ public class Bitacora {
     private String acceso;
 
     public String getIdBitacora() {
-        return id_bitacora;
+        return idBitacora;
     }
 
-    public void setIdBitacora(String id_bitacora) {
-        this.id_bitacora = id_bitacora;
+    public void setIdBitacora(String idBitacora) {
+        this.idBitacora = idBitacora;
     }
 
     public String getUsuario() {

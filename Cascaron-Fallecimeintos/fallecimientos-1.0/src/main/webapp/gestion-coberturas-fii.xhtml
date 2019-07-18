@@ -70,8 +70,8 @@
                 <h:outputFormat value="#{iniciaSesion.getTipoUsuario()}" styleClass="usuario" />
         </h:form>
         
-        <div class="menu">
-            <h:form>
+        <div id="administrador" class="menu">
+            <h:form rendered="false">
                 <p:growl id="messages" showDetail="false"/>
                 <p:menu class="menuitem">
                     <p:submenu label="Gestión de Coberturas">

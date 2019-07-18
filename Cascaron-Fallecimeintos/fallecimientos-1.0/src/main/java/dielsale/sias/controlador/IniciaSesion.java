@@ -7,6 +7,8 @@ package dielsale.sias.controlador;
 
 import dielsale.sias.modelo.Usuario;
 import dielsale.sias.modelo.UtilidadUsuario;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -68,19 +70,38 @@ public class IniciaSesion {
      */
     public String inicia(){
         Usuario usuario = u.buscaPorUsuario(user);
+        String nombreUsuario = usuario.getUsuario();
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
+        Actualiza actualiza = new Actualiza();
         if(usuario != null){
+            System.out.println("--------------"+actualiza.getStatus(nombreUsuario));
+            if(actualiza.getStatus(nombreUsuario)){
+                //El acceso es incorrecto pues tiene la cuenta bloqueada
+                rContext.execute("PF('bloqueado').show()");
+                return "";
+            }
             if(usuario.getTipo().trim().equals("")){
                 rContext.execute("PF('perfil').show()");
                 return "";
+            }
+            //verificamos que la cuenta ya esté habilitada
+            if(actualiza.getHoraDeshabilitado(nombreUsuario) != null){
+                LocalTime horaDeshabilitado = LocalTime.parse(actualiza.getHoraDeshabilitado(nombreUsuario)).plus(5, ChronoUnit.MINUTES);
+                LocalTime horaActual = LocalTime.now();
+                System.out.println("-----"+horaDeshabilitado.isBefore(horaActual)+"-----");
+                System.out.println("Hora BD+5:"+horaDeshabilitado);
+                System.out.println("Hora Actual"+horaActual);
+                if(horaDeshabilitado.isAfter(horaActual)){
+                    rContext.execute("PF('deshabilitado').show()");
+                    return "";
+                }
             }
             if(usuario.getContrasenia().equals(pwd)){
                 context.getExternalContext().getSessionMap().put("tipo_usuario", usuario.getTipo());
                 context.getExternalContext().getSessionMap().put("usuario", usuario.getUsuario());
                 //El acceso es correcto
-                ActualizaBitacora actualiza = new ActualizaBitacora();
-                actualiza.acceso(usuario.getUsuario());
+                actualiza.acceso(nombreUsuario);
                 try{
                     TimeUnit.SECONDS.sleep(3);
                 }catch(InterruptedException e){
@@ -88,18 +109,26 @@ public class IniciaSesion {
                 }
                 return "modulos.xhmtl?faces-redirect=true";
             }
-            else{
-                FacesContext.getCurrentInstance()
-                .addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "Usuario o contraseña incorrecto", ""));
+            //acceso incorrecto
+            FacesContext.getCurrentInstance()
+            .addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Usuario o contraseña incorrecto", ""));
+            if(actualiza.getIntentos(nombreUsuario) == 5){
+                if(actualiza.resetIntentos(nombreUsuario) == 2){
+                    rContext.execute("PF('bloqueado').show()");
+                    return"";
+                }
+                rContext.execute("PF('5_intentos').show()");
                 return "";
             }
+            actualiza.intentoFallido(nombreUsuario);
+            return "";
         }
         FacesContext.getCurrentInstance()
-                .addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "Usuario o contraseña incorrecto", ""));
+            .addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Usuario o contraseña incorrecto", ""));
         return "";
     }
     

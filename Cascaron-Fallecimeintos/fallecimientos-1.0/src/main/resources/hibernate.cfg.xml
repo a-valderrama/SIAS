@@ -16,5 +16,6 @@
     <mapping class="dielsale.sias.modelo.Usuario" file="" jar="" package="" resource=""/>
     <mapping class="dielsale.sias.modelo.Layout" file="" jar="" package="" resource=""/>
     <mapping class="dielsale.sias.modelo.Bitacora" file="" jar="" package="" resource=""/>
+    <mapping class="dielsale.sias.modelo.Acceso" file="" jar="" package="" resource=""/>
   </session-factory>
 </hibernate-configuration>

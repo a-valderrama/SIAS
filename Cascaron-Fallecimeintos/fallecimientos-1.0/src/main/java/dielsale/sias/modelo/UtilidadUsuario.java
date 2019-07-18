@@ -51,4 +51,65 @@ public class UtilidadUsuario {
         }
         return null;
     }
+    
+    /**
+     * Actualiza el status de la cuenta del usuario
+     * a bloqueado. Por sus constantes accesos 
+     * fallidos al sistema.
+     * 
+     * @param usuario Usuario que realizó un intento
+     *                fallido
+     */
+    public void bloqueaCuenta (String usuario){
+        try {
+            sessionObj = HibernateUtil.getSessionFactory().openSession();
+            sessionObj.beginTransaction();
+            String hql = "UPDATE Usuario u SET u.bloqueado = TRUE WHERE u.usuario = :usuario";
+            Query query = sessionObj.createQuery(hql);
+            query.setString("usuario", usuario);
+            query.executeUpdate();
+        } catch (Exception sqlException) {
+            if (null != sessionObj.getTransaction()) {
+                System.out.println("\n.......Transaction Is Being Rolled Back.......");
+                sessionObj.getTransaction().rollback();
+            }
+            sqlException.printStackTrace();
+        } finally {
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
+        }
+    }
+    
+    /**
+     * Nos dice el status de la cuenta del usuario
+     * 
+     * @param usuario Usuario del cual queremos conocer
+     *                el status de la cuenta.
+     * @return true   Si está bloqueada
+     *         false  En otro caso
+     */
+    public boolean getStatus (String usuario){
+        try {
+            sessionObj = HibernateUtil.getSessionFactory().openSession();
+            sessionObj.beginTransaction();
+            String hql = "FROM Usuario u WHERE u.usuario = :usuario";
+            Query query = sessionObj.createQuery(hql);
+            query.setString("usuario",usuario);
+            Usuario u = (Usuario)query.uniqueResult();
+            sessionObj.getTransaction().commit();
+            return u.getBloqueado();
+        } catch (Exception sqlException) {
+            if (null != sessionObj.getTransaction()) {
+                System.out.println("\n.......Transaction Is Being Rolled Back.......");
+                sessionObj.getTransaction().rollback();
+            }
+            sqlException.printStackTrace();
+        } finally {
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
+        }
+        return false;
+    }
 }

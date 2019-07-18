@@ -9,14 +9,25 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- *
- * @author dielsale
+ * Esta clase nos permite mapear la vista a la base de datos,
+ * y viceversa, utilizando las queries de hibernate.
+ * Es decir, nos permite conocer toda la información de la 
+ * Bitacora de la BD.
+ * 
+ * @author a-valderrama
  */
 public class UtilidadBitacora {
     
     static Layout comObj;
     static Session sessionObj;
     
+    /**
+     * Registra en la bitácora el nuevo acceso de 
+     * un usuario.
+     * 
+     * @param nuevoRegistro El nuevo registro a poner 
+     *                      en la bitácora
+     */
     public void actualizaAcceso(Bitacora nuevoRegistro){
         try {
             sessionObj = HibernateUtil.getSessionFactory().openSession();

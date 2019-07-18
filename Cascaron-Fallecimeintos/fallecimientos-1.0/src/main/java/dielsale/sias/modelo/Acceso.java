@@ -12,29 +12,29 @@ import javax.persistence.Table;
 
 /**
  * Esta clase la usamos para tener acceso a los 
- * atributos del administrador desde la vista. 
+ * atributos del acceso desde la vista. 
  * Pero además definimos las columnas de la base
  * de datos que se va a leer. Así como el nombre 
  * de la tabla.
- *  
+ * 
  * @author a-valderrama
  */
 @Entity
-@Table(catalog = "SIAS", schema = "public", name = "usuario")
-public class Usuario{
+@Table(catalog = "SIAS", schema = "public", name = "accesos")
+public class Acceso {
     
     @Id
     @Column(name = "usuario")
     private String usuario;
     
-    @Column(name = "contraseña")
-    private String contrasenia;
+    @Column(name = "intentos")
+    private int intentos;
     
-    @Column(name = "tipo")
-    private String tipo;
+    @Column(name = "errores")
+    private int errores; 
     
-    @Column(name = "bloqueado")
-    private boolean bloqueado;
+    @Column(name = "hora_deshabilitado")
+    private String horaDeshabilitado;
 
     public String getUsuario() {
         return usuario;
@@ -44,27 +44,27 @@ public class Usuario{
         this.usuario = usuario;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
+    public int getIntentos() {
+        return intentos;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setIntentos(int intentos) {
+        this.intentos = intentos;
     }
 
-    public String getTipo() {
-        return tipo;
+    public int getErrores() {
+        return errores;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setErrores(int errores) {
+        this.errores = errores;
     }
 
-    public boolean getBloqueado() {
-        return bloqueado;
+    public String getHoraDeshabilitado() {
+        return horaDeshabilitado;
     }
 
-    public void setBloqueado(boolean bloqueado) {
-        this.bloqueado = bloqueado;
+    public void setHoraDeshabilitado(String horaDeshabilitado) {
+        this.horaDeshabilitado = horaDeshabilitado;
     }
 }
