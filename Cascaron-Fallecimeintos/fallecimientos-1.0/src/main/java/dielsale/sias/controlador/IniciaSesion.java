@@ -70,12 +70,11 @@ public class IniciaSesion {
      */
     public String inicia(){
         Usuario usuario = u.buscaPorUsuario(user);
-        String nombreUsuario = usuario.getUsuario();
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
         Actualiza actualiza = new Actualiza();
         if(usuario != null){
-            System.out.println("--------------"+actualiza.getStatus(nombreUsuario));
+            String nombreUsuario = usuario.getUsuario();
             if(actualiza.getStatus(nombreUsuario)){
                 //El acceso es incorrecto pues tiene la cuenta bloqueada
                 rContext.execute("PF('bloqueado').show()");
@@ -133,17 +132,42 @@ public class IniciaSesion {
     }
     
     /**
-     * Método que nos regresa el tipo de usuario que hizo
-     * log in. Obtenemos el tipo de usuario guardado en el 
-     * sessionMap.
+     * Método que nos regresa el usuario que hizo
+     * log in y la forma en la que se mostrará en
+     * pantalla. Los obtenemos del sessionMap.
      * 
-     * @return String Tipo de usuario que ha realizado 
-     *                login
+     * @return String El usuario a mostrar en las vistas.
+     */
+    public String getUsuarioCompleto(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String tipo = (String)context.getExternalContext().getSessionMap().get("tipo_usuario");
+        String usuario = (String)context.getExternalContext().getSessionMap().get("usuario");
+        return usuario+"."+tipo;
+    }
+    
+    /**
+     * Método que nos regresa el perfil del usuario 
+     * que hizo log in. Lo obtenemos del sessionMap.
+     * 
+     * @return String El perfil del usuario que 
+     *                realizo el log in.
      */
     public String getTipoUsuario(){
         FacesContext context = FacesContext.getCurrentInstance();
         String tipo = (String)context.getExternalContext().getSessionMap().get("tipo_usuario");
-        tipo = "usuario."+tipo;
         return tipo;
+    }
+    
+     /**
+     * Método que nos regresa el nombre del usuario 
+     * que hizo log in. Lo obtenemos del sessionMap.
+     * 
+     * @return String El nombre del usuario que 
+     *                realizo el log in.
+     */
+    public String getUsuario(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String usuario = (String)context.getExternalContext().getSessionMap().get("usuario");
+        return usuario;
     }
 }

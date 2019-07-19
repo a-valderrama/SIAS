@@ -44,8 +44,6 @@
     </h:head>
         <img id="logo_fonacot" src="resources/css/fonacot.jpg" width="130" height="37"/>
         <img id="logo_sias" src="resources/css/logo.png" width="110" height="45"/>
-        <img id="g_coberturas" src="resources/css/g_coberturas.png" width="180" height="180"/>
-        <img id="c_reclamo" src="resources/css/c_reclamo.png" width="180" height="180"/>
         <img id="clock" src="resources/css/clock.png"/>
         <img id="logout" src="resources/css/logout.png"/>
     <h:body onload="start();">
@@ -54,13 +52,7 @@
         </div>
         <div class="seccion">
             Menú - Módulos
-        </div>
-        <div class="link_cobertura">
-            <a href="gestion-coberturas.xhtml">Gestión de Coberturas</a>
-        </div>
-        <div class="link_reclamo">
-            <a href="modulos.xhtml">Conciliar Reclamos</a>
-        </div>
+        </div> 
         
         <script type="text/javascript" src="resources/js/date.js"/>
         <script type="text/javascript" src="resources/js/time.js"/>
@@ -68,11 +60,21 @@
         <div id="dateDisplay" class="date"/>
         <div id="timeDisplay" class="time"/>
         
+        <h:form  rendered="#{display.gModulo()}">
+            <img id="g_coberturas" src="resources/css/g_coberturas.png" width="180" height="180"/>
+            <a href="gestion-coberturas.xhtml" class="link_cobertura">Gestión de Coberturas</a>
+        </h:form>
+        
+        <h:form rendered="true">
+            <img id="c_reclamo" src="resources/css/c_reclamo.png" width="180" height="180"/>
+            <a href="modulos.xhtml" class="link_reclamo">Conciliar Reclamos</a>
+        </h:form>
+        
         <h:form>
             <p:commandButton value="Salir" 
                              action="#{cierraSesion.cierra()}" 
                              styleClass="button"/>
-            <h:outputFormat value="#{iniciaSesion.getTipoUsuario()}" styleClass="usuario" />
+            <h:outputFormat value="#{iniciaSesion.getUsuarioCompleto()}" styleClass="usuario" />
         </h:form>
         
     </h:body>

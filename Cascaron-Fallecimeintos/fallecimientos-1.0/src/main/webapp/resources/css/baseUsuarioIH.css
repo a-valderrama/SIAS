@@ -164,8 +164,8 @@ p.sias{
 }
 
 .menuitem{
-    background-color: #add0ea;
-    width: 205px !important;
+    background-color: #add0ea !important;
+    width: 215px !important;
 }
 
 .menu{
@@ -207,3 +207,13 @@ p.descripcion_soporte{
     line-height: 1.5;
 }
 /*Para la vista con funcionalidades*/
+
+/*Menu con tree-options*/
+.ui-panelmenu-content{
+    background-color: #add0ea;
+}
+
+.ui-panelmenu-header{
+    background-color: #DDD;
+}
+/*Menu con tree-options*/

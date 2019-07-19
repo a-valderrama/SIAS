@@ -67,26 +67,59 @@
             <p:commandButton value="Salir" 
                              action="#{cierraSesion.cierra()}" 
                              styleClass="button"/>
-                <h:outputFormat value="#{iniciaSesion.getTipoUsuario()}" styleClass="usuario" />
+                <h:outputFormat value="#{iniciaSesion.getUsuarioCompleto()}" styleClass="usuario" />
         </h:form>
         
-        <div id="administrador" class="menu">
-            <h:form rendered="false">
-                <p:growl id="messages" showDetail="false"/>
-                <p:menu class="menuitem">
-                    <p:submenu label="Gestión de Coberturas">
-                        <p:menuitem value="Reclamo por desempleo" icon="ui-icon-radio-off"/>
-                        <p:menuitem id="nada" value="Relamos por fallecimiento,&#10;invalidez e incapacidad" 
-                                    style="white-space: pre;" icon="ui-icon-radio-off">
-                                    <f:ajax execute = "nada" render = "sube_archivo" />
-                            </p:menuitem>
-                        <p:menuitem value="Reclamo de Atención a&#10;Clientes" style="white-space: pre;" 
-                                    icon="ui-icon-radio-off"/>
-                        <p:menuitem value="Integrar Reclamo" icon="ui-icon-radio-off"/>
-                        <p:menuitem value="Enviar reclamo mensual" icon="ui-icon-radio-off"/>
-                        <p:menuitem value="Reportes" icon="ui-icon-radio-off"/>
+        <div class="menu">
+            <h:form id="administrador" rendered="#{display.esAdministrador()}">
+                <p:panelMenu class="menuitem" >
+                    <p:submenu label="Gestión de Coberturas" >
+                        <p:menuitem value="Reclamo por desempleo" icon="ui-icon-radio-off"/> 
+                        <p:submenu label="Reclamos por fallecimiento,&#10;invalidez e incapacidad" 
+                                   style="white-space: pre;">
+                            <p:menuitem value="Cargar Layout" icon="ui-icon-radio-off"
+                                        action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/> 
+                            <p:menuitem value="Cargar soporte &#10;documental" icon="ui-icon-radio-off"
+                                        style="white-space: pre;"
+                                        action="gestion-coberturas-fii_soporte.xhtml?faces-redirect=true"/> 
+                        </p:submenu>
+                        <p:menuitem value="Reclamos de Atención&#10; a clientes" icon="ui-icon-radio-off"
+                                    style="white-space: pre;"/> 
+                        <p:submenu label="Enviar reclamo" >
+                            <p:menuitem value="Revisar reclamo" icon="ui-icon-radio-off"/> 
+                            <p:menuitem value="Validar reclamo" icon="ui-icon-radio-off"/> 
+                            <p:menuitem value="Autorizar reclamo" icon="ui-icon-radio-off"/> 
+                        </p:submenu>
+                        <p:submenu label="Reportes">
+                            <p:submenu label="Reportes inf. seguros">
+                                <p:menuitem value="Reporte por envío" icon="ui-icon-radio-off"/>
+                            </p:submenu>
+                            <p:menuitem value="Reportes del sistema" icon="ui-icon-radio-off"/> 
+                        </p:submenu>
+                        <p:menuitem value="Administración de usuarios&#10; y perfiles" 
+                                    icon="ui-icon-radio-off" style="white-space: pre;"/> 
                     </p:submenu>
-                </p:menu>
+                </p:panelMenu>
+            </h:form>
+            
+            <h:form id="analista2" rendered="#{display.esAnalista2()}">
+                <p:panelMenu class="menuitem" >
+                    <p:submenu label="Gestión de Coberturas" >
+                        <p:submenu label="Reclamos por fallecimiento,&#10;invalidez e incapacidad" 
+                                   style="white-space: pre;">
+                            <p:menuitem value="Cargar Layout" icon="ui-icon-radio-off"
+                                        action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/> 
+                            <p:menuitem value="Cargar soporte &#10;documental" icon="ui-icon-radio-off"
+                                        style="white-space: pre;"
+                                        action="gestion-coberturas-fii_soporte.xhtml?faces-redirect=true"/> 
+                        </p:submenu>
+                        <p:submenu label="Reportes">
+                            <p:submenu label="Reportes inf. seguros">
+                                <p:menuitem value="Reporte por envío" icon="ui-icon-radio-off"/>
+                            </p:submenu>
+                        </p:submenu>
+                    </p:submenu>
+                </p:panelMenu>
             </h:form>
         </div>
         
