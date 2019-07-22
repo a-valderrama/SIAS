@@ -99,10 +99,15 @@ public class UploadFile {
             Files.copy(contenido, ruta, StandardCopyOption.REPLACE_EXISTING);
             /*Probando validación desde groovy*/
             CargaDatos carga = new CargaDatos();
-            carga.validaDatos(f);
+            String datos = "Errores en:\n" + carga.validaDatos(f);
+            context.getExternalContext().getSessionMap().put("error_layout", datos);
+            if(!datos.equals("")){
+                rContext.execute("PF('formato_incorrecto').show()");
+                return;
+            }
             /*Probando validación desde groovy*/
         }catch (IOException e) {
-            rContext.execute("PF('io_error').show");
+            rContext.execute("PF('io_error').show()");
         }
         
         cargarDatos(rutaCompleta);
@@ -139,7 +144,6 @@ public class UploadFile {
      */
     public void soporte(FileUploadEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage msg;
         file = event.getFile();
         String rutaString = "/home/dielsale/Documentos/SIAS/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Soporte";
         File directorio = new File(rutaString);
@@ -248,13 +252,27 @@ public class UploadFile {
                 context.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
                 rContext.execute("PF('exitoso').show()");
             }else{
-                rContext.execute("PF('formato_incorrecto').show()");
+                rContext.execute("PF('formato_incorrecto_bd').show()");
             }
         } catch (IOException e) {
 		e.printStackTrace();
 	} catch (InterruptedException e) {
 		e.printStackTrace();
 	}
+    }
+    
+    /**
+     * Regresa mensaje de error con los valores del
+     * renglón y columna en la que se encuentra el 
+     * error en el layout
+     * 
+     * @return mensaje de error con los valores del
+     *         renglón y columna
+     */
+    public String getErrorLayout(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String id = (String)context.getExternalContext().getSessionMap().get("error_layout");
+        return id;
     }
     
     /*

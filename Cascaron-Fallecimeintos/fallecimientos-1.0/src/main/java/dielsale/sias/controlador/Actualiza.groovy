@@ -95,7 +95,7 @@ class Actualiza {
             return 2
         }
         uAccesos.resetIntentos(usuario)
-        LocalTime acceso = LocalTime.now()
+        LocalDateTime acceso = LocalDateTime.now()
         uAccesos.setHoraDeshabilitado(usuario, acceso as String)
         return 1
     }
@@ -114,15 +114,23 @@ class Actualiza {
     }
     
     /**
-     * Nos dice la hora en la que se bloqueo
+     * Nos dice la hora en la que se deshabilito
      * la cuenta del usuario.
      *
      * @param String  El usuario del cual queremos
-     *                verificar el bloqueo.
-     * @return String Hora del bloqueo.
+     *                verificar el deshabilito.
+     * @return String Hora del deshabilito.
      */
     public String getHoraDeshabilitado (String usuario){
         return uAccesos.getHoraDeshabilitado(usuario)
+    }
+    
+    /**
+     * Actualiza la hora en la que se deshabilito
+     * la cuenta del usuario.
+     */
+    public void setHoraDeshabilitado (String usuario, String hora){
+        uAccesos.setHoraDeshabilitado(usuario,hora)
     }
 }
 

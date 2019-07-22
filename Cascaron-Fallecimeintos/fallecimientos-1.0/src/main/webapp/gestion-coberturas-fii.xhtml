@@ -27,6 +27,9 @@
                 background-color: #70a3ca;
             }
             
+            .preformatted {
+                white-space: pre-wrap;
+            }
         </style>
         
         <script type="text/javascript">
@@ -129,7 +132,7 @@
             </p>
         </h:form>
         
-        <h:form enctype="multipart/form-data">
+        <h:form enctype="multipart/form-data" >
             <p:growl id="messages" showDetail="true" />
             <p:fileUpload value="#{uploadFile.file}" mode="advanced"
                           fileUploadListener="#{uploadFile.handleFileUpload}" 
@@ -137,7 +140,7 @@
                           label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" 
                           fileLimitMessage="Ha excedido el límite de archivos (1)" 
                           invalidFileMessage="No se encontró el formato correcto (.csv) en:"
-                          sizeLimit="500000" class="upload" update="exito"/>
+                          sizeLimit="500000" class="upload" update="error_layout exito" />
         </h:form>
         
         <p:dialog widgetVar="io_error" showEffect="fade" resizable="true" modal="true">
@@ -162,10 +165,24 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog widgetVar="formato_incorrecto" showEffect="fade" closable="false" resizable="true" modal="true">
+        <p:dialog id="error_layout" widgetVar="formato_incorrecto" showEffect="fade" closable="false" 
+                  resizable="true" modal="true">
              <h:form>
-                <h:outputText value="El formato del layout es incorrecto. &lt;br /&gt; 
-                                     Por favor reviselo e intente de nuevo." escape="false"/>
+                <div align="center" > 
+                    <h:outputText value="#{uploadFile.getErrorLayout()}" escape="false"/>
+                </div>
+                <br/>
+                <br/>
+                <div align="center"> 
+                    <p:commandButton value="Intentar de nuevo" onclick="PF('error_layout').hide()"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog widgetVar="formato_incorrecto_bd" showEffect="fade" closable="false" resizable="true" modal="true">
+             <h:form>
+                <h:outputText value="Hubo un problema con la base de datos. &lt;br /&gt; 
+                                     Por favor intente de nuevo." escape="false"/>
                 <br/>
                 <br/>
                 <div align="center"> 

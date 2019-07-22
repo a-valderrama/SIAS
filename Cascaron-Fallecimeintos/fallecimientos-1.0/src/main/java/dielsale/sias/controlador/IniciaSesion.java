@@ -7,6 +7,7 @@ package dielsale.sias.controlador;
 
 import dielsale.sias.modelo.Usuario;
 import dielsale.sias.modelo.UtilidadUsuario;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
@@ -85,22 +86,22 @@ public class IniciaSesion {
                 return "";
             }
             //verificamos que la cuenta ya esté habilitada
-            if(actualiza.getHoraDeshabilitado(nombreUsuario) != null){
-                LocalTime horaDeshabilitado = LocalTime.parse(actualiza.getHoraDeshabilitado(nombreUsuario)).plus(5, ChronoUnit.MINUTES);
-                LocalTime horaActual = LocalTime.now();
-                System.out.println("-----"+horaDeshabilitado.isBefore(horaActual)+"-----");
-                System.out.println("Hora BD+5:"+horaDeshabilitado);
-                System.out.println("Hora Actual"+horaActual);
+            String horaD = actualiza.getHoraDeshabilitado(nombreUsuario);
+            if( horaD != null && !horaD.equals("")){
+                LocalDateTime horaDeshabilitado = LocalDateTime.parse(horaD).plusMinutes(5);
+                LocalDateTime horaActual = LocalDateTime.now();
                 if(horaDeshabilitado.isAfter(horaActual)){
                     rContext.execute("PF('deshabilitado').show()");
                     return "";
                 }
             }
+            //El acceso es correcto
             if(usuario.getContrasenia().equals(pwd)){
                 context.getExternalContext().getSessionMap().put("tipo_usuario", usuario.getTipo());
                 context.getExternalContext().getSessionMap().put("usuario", usuario.getUsuario());
-                //El acceso es correcto
+                //Actualizamos las tablas del acceso 
                 actualiza.acceso(nombreUsuario);
+                actualiza.setHoraDeshabilitado(nombreUsuario, "");
                 try{
                     TimeUnit.SECONDS.sleep(3);
                 }catch(InterruptedException e){
