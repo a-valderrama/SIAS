@@ -45,7 +45,7 @@ CREATE TABLE layout(
 	sexo char NOT NULL,
 	rfc_trabajador varchar (17) NOT NULL,
 	importe double precision NOT NULL,
-	empresa varchar (100) NOT NULL,
+	empresa varchar (100),
 	domicilio_ct varchar (500),
 	tel_principal varchar (40) NOT NULL,
 	tel_cel varchar (40) NOT NULL,
