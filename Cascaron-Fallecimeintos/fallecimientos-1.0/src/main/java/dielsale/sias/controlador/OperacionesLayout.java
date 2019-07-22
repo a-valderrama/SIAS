@@ -5,6 +5,7 @@
  */
 package dielsale.sias.controlador;
 
+import dielsale.sias.modelo.Layout;
 import dielsale.sias.modelo.UtilidadLayout;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -31,8 +32,8 @@ public class OperacionesLayout {
      * 
      * @return List<Layout> datos del layout en la BD.
      */
-    public List<dielsale.sias.modelo.Layout> getLayout(){
-        List<dielsale.sias.modelo.Layout> layout = u.getLayout();
+    public List<Layout> getLayout(){
+        List<Layout> layout = u.getLayout();
         return layout;
     }
     

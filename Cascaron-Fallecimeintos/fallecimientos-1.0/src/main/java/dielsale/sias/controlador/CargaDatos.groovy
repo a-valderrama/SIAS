@@ -47,7 +47,7 @@ class CargaDatos {
      * @param file El archivo que contiene la 
      *            información que queremos validar
      */
-    public String validaDatos(File file){
+    public ArrayList<ErrorLayout> validaDatos(File file){
         try{
             FileReader filereader = new FileReader(file)
             //nos saltamos la primera línea porque es el header
@@ -56,114 +56,394 @@ class CargaDatos {
                                   .build()
             def String[] next
             def int renglon = 1
-            def String error = ""
+            def ErrorLayout error
+            def errores = new ArrayList<ErrorLayout>()
+            def creditoIncorrecto = ""
             
             while((next = csvReader.readNext()) != null){
-                if(!esAlfaNumerico(next[0]))
-                    error += renglon.toString()+":1,\n"
-
-                if(!esEndoso(next[1]))
-                    error += renglon.toString()+":2,\n"
-
-                if(!esId(next[2]))
-                    error += renglon.toString()+":3,\n"
-
-                if(!esNumerico(next[3]))
-                    error += renglon.toString()+":4,\n"
-
-                if(!esNumerico(next[4]))
-                    error += renglon.toString()+":5,\n"
-
-                if(!esTexto(next[5]))
-                    error += renglon.toString()+":6,\n"
-
-                if(!esTextoNull(next[6]))
-                    error += renglon.toString()+":7,\n"
-
-                if(!esTexto(next[7]))
-                    error += renglon.toString()+":8,\n"
-
-                if(!esTextoNull(next[8]))
-                    error += renglon.toString()+":9,\n"
-
-                if(!esFecha(next[9]))
-                    error += renglon.toString()+":10,\n"
-
-                if(!esSexo(next[10]))
-                    error += renglon.toString()+":11,\n"
-
-                if(!esRFC(next[11]))
-                    error += renglon.toString()+":12,\n"
-
-                if(!esFloat(next[12]))
-                    error += renglon.toString()+":13,\n"
-
-                if(!esEmpresa(next[13]))
-                    error += renglon.toString()+":14,\n"
-
-                if(!esTextoNull(next[14]))
-                    error += renglon.toString()+":15,\n"
-
-                if(!esNumTelefono(next[15]))
-                    error += renglon.toString()+":16,\n"
-
-                if(!esNumTelefono(next[16]))
-                    error += renglon.toString()+":17,\n"
-
-                if(!esSeguroSocial(next[17]))
-                    error += renglon.toString()+":18,\n"
-
-                if(!esNumSS(next[18]))
-                    error += renglon.toString()+":19,\n"
-
-                if(!esNumericoNull(next[19]))
-                    error += renglon.toString()+":20,\n"
-
-                if(!esProducto(next[20]))
-                    error += renglon.toString()+":21,\n"
-
-                if(!esSeguroSocial(next[21]))
-                    error += renglon.toString()+":22,\n"
-
-                if(!esIdEnvio(next[22]))
-                    error += renglon.toString()+":23,\n"
-
-                if(!esNumerico(next[23]))
-                    error += renglon.toString()+":24,\n"
-
-                if(!esFecha(next[24]))
-                    error += renglon.toString()+":25,\n"
-
-                if(!esNumerico(next[25]))
-                    error += renglon.toString()+":26,\n"
-
-                if(!esFloat (next[26]))
-                    error += renglon.toString()+":27,\n"
-
-                if(!esFecha(next[27]))
-                    error += renglon.toString()+":28,\n"
-
-                if(!esFecha(next[28]))
-                    error += renglon.toString()+":29,\n"
-
-                if(!esPlazo(next[29]))
-                    error += renglon.toString()+":30,\n"
-
-                if(!esMovimiento(next[30]))
-                    error += renglon.toString()+":31,\n"
-
-                if(!esFecha(next[31]))
-                    error += renglon.toString()+":32,\n"
-
-                if(!esFecha(next[32]))
-                    error += renglon.toString()+":33,\n"
-
-                if(!esNumericoNull(next[33]))
-                    error += renglon.toString()+":34,\n"
-
-                if(!esActual(next[34]))
-                    error += renglon.toString()+":35,\n"
                 
+                if(!esAlfaNumerico(next[0])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(1)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esEndoso(next[1])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(2)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esId(next[2])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(3)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+                
+                if(!esNumerico(next[3])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(4)
+                    error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumerico(next[4])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(5)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esTexto(next[5])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(6)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esTextoNull(next[6])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(7)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esTexto(next[7])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(8)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esTextoNull(next[8])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(9)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[9])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(10)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esSexo(next[10])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(11)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esRFC(next[11])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(12)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFloat(next[12])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(13)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esEmpresa(next[13])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(14)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esTextoNull(next[14])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(15)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumTelefono(next[15])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(16)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumTelefono(next[16])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(17)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esSeguroSocial(next[17])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(18)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumSS(next[18])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(19)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumericoNull(next[19])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(20)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esProducto(next[20])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(21)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esSeguroSocial(next[21])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(22)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esIdEnvio(next[22])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(23)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumerico(next[23])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(24)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[24])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(25)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumerico(next[25])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(26)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFloat (next[26])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(27)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[27])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(28)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[28])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(29)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esPlazo(next[29])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(30)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esMovimiento(next[30])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(31)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[31])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(32)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esFecha(next[32])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(33)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esNumericoNull(next[33])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(34)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
+                if(!esActual(next[34])){
+                    error = new ErrorLayout()
+                    error.setRenglon(renglon)
+                    error.setColumna(35)
+                    if(esNumerico(next[3]))
+                        error.setIdCredito(next[3] as Integer)
+                    else
+                        error.setIdCredito(creditoIncorrecto as Integer)
+                    errores.add(error)
+                }
+
                 renglon++
                 
                 //Para las pruebas. Quitarlo al terminarlas.
@@ -183,7 +463,7 @@ class CargaDatos {
                         "\t" + esActual(next[34])
                         )*/
             }
-            return error[0..error.length()-3]
+            return errores
         }catch(Exception e){
             e.printStackTrace()
         }

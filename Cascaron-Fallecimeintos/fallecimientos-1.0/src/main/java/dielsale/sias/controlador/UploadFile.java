@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -99,9 +100,9 @@ public class UploadFile {
             Files.copy(contenido, ruta, StandardCopyOption.REPLACE_EXISTING);
             /*Probando validación desde groovy*/
             CargaDatos carga = new CargaDatos();
-            String datos = "Errores en:\n" + carga.validaDatos(f);
-            context.getExternalContext().getSessionMap().put("error_layout", datos);
-            if(!datos.equals("")){
+            ArrayList<ErrorLayout> errores = carga.validaDatos(f);
+            context.getExternalContext().getSessionMap().put("errores", errores);
+            if(!errores.isEmpty()){
                 rContext.execute("PF('formato_incorrecto').show()");
                 return;
             }
@@ -262,17 +263,17 @@ public class UploadFile {
     }
     
     /**
-     * Regresa mensaje de error con los valores del
-     * renglón y columna en la que se encuentra el 
-     * error en el layout
+     * Regresa la lista con todos los errores respecto
+     * a los campos del layout. Esta lista se obtiene  
+     * del session map.
      * 
-     * @return mensaje de error con los valores del
-     *         renglón y columna
+     * @return La lista con todos los errores respecto
+     *         a los campos del layout.
      */
-    public String getErrorLayout(){
+    public ArrayList<ErrorLayout> getErroresLayout(){
         FacesContext context = FacesContext.getCurrentInstance();
-        String id = (String)context.getExternalContext().getSessionMap().get("error_layout");
-        return id;
+        ArrayList<ErrorLayout> errores = (ArrayList<ErrorLayout>)context.getExternalContext().getSessionMap().get("errores");
+        return errores;
     }
     
     /*

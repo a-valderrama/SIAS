@@ -156,7 +156,7 @@
         
         <p:dialog id="exito" widgetVar="exitoso" showEffect="fade" closable="false" resizable="true" modal="true">
              <h:form>
-                 <h:outputText value="#{uploadFile.getNumRegistros()}"/>
+                <h:outputText value="#{uploadFile.getNumRegistros()}"/>
                 <br/>
                 <br/>
                 <div align="center">
@@ -166,13 +166,31 @@
         </p:dialog>
         
         <p:dialog id="error_layout" widgetVar="formato_incorrecto" showEffect="fade" closable="false" 
-                  resizable="true" modal="true">
-             <h:form>
-                <div align="center" > 
-                    <h:outputText value="#{uploadFile.getErrorLayout()}" escape="false"/>
-                </div>
+                  resizable="true" modal="true" width="1000">
+            <h:form>
+                <h:outputText value="Existen registros que no tienen la estructura requerida"/>
                 <br/>
                 <br/>
+                <p:dataTable var="err" value="#{uploadFile.getErroresLayout()}" 
+                             styleClass = "tablaFiltrada" scrollable="true" scrollHeight="350" 
+                             rowHover="true" rowStyleClass="renglones">
+                    <p:column headerText="Id Crédito">
+                        <div align="center">
+                            #{err.idCredito}
+                        </div>
+                    </p:column>
+                    <p:column headerText="Renglon">
+                        <div align="center">
+                            #{err.renglon}
+                        </div>
+                    </p:column>
+                    <p:column headerText="Columna">
+                        <div align="center">
+                            #{err.columna}
+                        </div>
+                    </p:column>
+                </p:dataTable>
+                
                 <div align="center"> 
                     <p:commandButton value="Intentar de nuevo" onclick="PF('error_layout').hide()"/>
                 </div>
