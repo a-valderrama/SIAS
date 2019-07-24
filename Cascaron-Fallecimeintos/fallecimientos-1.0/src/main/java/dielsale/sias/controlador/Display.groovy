@@ -69,7 +69,7 @@ class Display {
      * @return true  Si su perfil es analista2
      *         false En otro caso
      */
-        public boolean esAnalista2(){
+    public boolean esAnalista2(){
         def perfil = i.getTipoUsuario()
         if(perfil.matches("analista2"))
             return true
@@ -83,7 +83,7 @@ class Display {
      * @return true  Si su perfil es analista3
      *         false En otro caso
      */
-        public boolean esAnalista3(){
+    public boolean esAnalista3(){
         def perfil = i.getTipoUsuario()
         if(perfil.matches("analista3"))
             return true

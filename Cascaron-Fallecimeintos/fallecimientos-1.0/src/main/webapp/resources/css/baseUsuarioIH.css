@@ -88,7 +88,7 @@ p.sias{
     background: no-repeat;
     padding: 0px;
     position: absolute;
-    left: 1120px;
+    left: 1110px;
     top: 25px;
 }
 
@@ -217,3 +217,23 @@ p.descripcion_soporte{
     background-color: #DDD;
 }
 /*Menu con tree-options*/
+/*Agregamos estilo a la barra para importar*/
+.upload{
+    position: absolute;
+    max-width: 850px;
+    top: 280px;
+    left: 400px;
+}
+
+.ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
+    font-size: 0.9em;
+}
+
+.ui-fileupload-buttonbar.ui-widget-header {
+    background-color: #70a3ca;
+}
+
+.preformatted {
+    white-space: pre-wrap;
+}
+/*Agregamos estilo a la barra para importar*/

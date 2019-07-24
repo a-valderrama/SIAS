@@ -5,14 +5,10 @@
  */
 package dielsale.sias.controlador;
 
-import dielsale.sias.modelo.UtilidadLayout;
-import java.io.BufferedReader;
+import dielsale.sias.modelo.UtilidadFallecimiento;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -40,7 +36,7 @@ import org.primefaces.model.UploadedFile;
 public class UploadFile {
     
     private UploadedFile file;
-    private UtilidadLayout u =  new UtilidadLayout();
+    private UtilidadFallecimiento u =  new UtilidadFallecimiento();
  
     public UploadedFile getFile() {
         return file;
@@ -88,7 +84,6 @@ public class UploadFile {
         String timeStamp = dateFormat.format(date);
         String filename = "layout_" + timeStamp +".csv";
         //Establecemos la ruta absoluta
-        String rutaCompleta = rutaString+"/"+filename;
         try {
             if(! directorio.exists())
                 directorio.mkdir();
@@ -98,22 +93,36 @@ public class UploadFile {
             f.createNewFile();
             Path ruta = f.toPath();
             Files.copy(contenido, ruta, StandardCopyOption.REPLACE_EXISTING);
-            /*Probando validación desde groovy*/
+            /*Validamos y guardamos los datos con un script de groovy*/
             CargaDatos carga = new CargaDatos();
             ArrayList<ErrorLayout> errores = carga.validaDatos(f);
             context.getExternalContext().getSessionMap().put("errores", errores);
+            int numRegistros = carga.getNumRegistros();
+            String mensajeRegistros = "Se han cargado " + carga.getNumRegistros() + " registros exitosamente";
+            context.getExternalContext().getSessionMap().put("mensajeRegistros", mensajeRegistros);
+            context.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
             if(!errores.isEmpty()){
                 rContext.execute("PF('formato_incorrecto').show()");
                 return;
             }
-            /*Probando validación desde groovy*/
+            rContext.execute("PF('exitoso').show()");
+            /*Validamos y guardamos los datos con un script de groovy*/
         }catch (IOException e) {
             rContext.execute("PF('io_error').show()");
         }
-        
-        cargarDatos(rutaCompleta);
     }
     
+    /**
+     * Regresa el número de registros que fueron 
+     * cargados a la base.
+     * 
+     * @return el número de registros que fueron 
+     *         cargados a la base.
+     */
+    public String getNumRegistros(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        return (String)context.getExternalContext().getSessionMap().get("mensajeRegistros");
+    }
 
     
     /**
@@ -146,6 +155,7 @@ public class UploadFile {
     public void soporte(FileUploadEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         file = event.getFile();
+        //Ruta en la que se guardaran los soportes documentales
         String rutaString = "/home/dielsale/Documentos/SIAS/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Soporte";
         File directorio = new File(rutaString);
         //generamos el nombre
@@ -175,13 +185,25 @@ public class UploadFile {
     }
     
     /**
-     * Regresa el id del elemento del layout en custión
+     * Regresa la lista con todos los errores respecto
+     * a los campos del layout. Esta lista se obtiene  
+     * del session map.
      * 
-     * @return el id del elemento del layout en custión
+     * @return La lista con todos los errores respecto
+     *         a los campos del layout.
      */
-    public String getNumRegistros(){
+    public ArrayList<ErrorLayout> getErroresLayout(){
         FacesContext context = FacesContext.getCurrentInstance();
-        String id = (String)context.getExternalContext().getSessionMap().get("numRegistros");
+        ArrayList<ErrorLayout> errores = (ArrayList<ErrorLayout>)context.getExternalContext().getSessionMap().get("errores");
+        return errores;
+    }
+    
+    /*
+     * Regresa el id del elemento del layout en custión
+     */
+    private int getIdElemento(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        int id = (int)context.getExternalContext().getSessionMap().get("id_layout");
         return id;
     }
     
@@ -189,8 +211,10 @@ public class UploadFile {
      * Este método extrae los datos del archivo subido por el 
      * usuario para posteriormente poder llenar la tabla 
      * correspondiente en la base de datos.
+     * Este método carga los datos utilizando el administrador
+     * de la base de datos. Utilizando un bash script.
      */
-    private void cargarDatos(String rutaCsv){
+    /*private void cargarDatos(String rutaCsv){
         String numRegistros;
         RequestContext rContext = RequestContext.getCurrentInstance();
         //Establecemos el nombre y ruta del shell script
@@ -210,7 +234,7 @@ public class UploadFile {
             PrintWriter printWriter = new PrintWriter(fw);
             /*Para esto usamos el siguiente shell, pero se puede 
               usar el que se prefiera*/
-            printWriter.print("#!/bin/bash\n");
+            /*printWriter.print("#!/bin/bash\n");
             printWriter.print("dbname=\"SIAS\"\n");
             printWriter.print("psql $dbname << EOF\n");
             printWriter.printf("\\COPY layout(poliza,endoso,id_aseguradora,id_credito,id_trabajador,paterno,materno,nombre,"
@@ -230,7 +254,7 @@ public class UploadFile {
             /*le damos permiso de ejecucion al script. Solo necesitamos
               darle permiso de ejecución una vez, cuando se crea el
               archivo, pues después de eso sólo sobrescribimos.*/
-            processBuilder.command("chmod", "+x", rutaCompleta);
+            /*processBuilder.command("chmod", "+x", rutaCompleta);
             Process p = processBuilder.start();
             //ejecutamos el script
             processBuilder.command(rutaCompleta);
@@ -260,29 +284,6 @@ public class UploadFile {
 	} catch (InterruptedException e) {
 		e.printStackTrace();
 	}
-    }
-    
-    /**
-     * Regresa la lista con todos los errores respecto
-     * a los campos del layout. Esta lista se obtiene  
-     * del session map.
-     * 
-     * @return La lista con todos los errores respecto
-     *         a los campos del layout.
-     */
-    public ArrayList<ErrorLayout> getErroresLayout(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        ArrayList<ErrorLayout> errores = (ArrayList<ErrorLayout>)context.getExternalContext().getSessionMap().get("errores");
-        return errores;
-    }
-    
-    /*
-     * Regresa el id del elemento del layout en custión
-     */
-    private int getIdElemento(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        int id = (int)context.getExternalContext().getSessionMap().get("id_layout");
-        return id;
-    }
+    }*/
 }
 

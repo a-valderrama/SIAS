@@ -8,8 +8,6 @@ package dielsale.sias.controlador;
 import dielsale.sias.modelo.Usuario;
 import dielsale.sias.modelo.UtilidadUsuario;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

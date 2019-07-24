@@ -10,36 +10,66 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos, y
- * viceversa, utilizando las queries de hibernate.
- * Es decir, nos permite conocer toda la información de Layout 
- * de la BD para utilizara en la vista.
+ * Esta clase nos permite mapear la vista a la base
+ * de datos, y viceversa, utilizando las queries 
+ * de hibernate.
+ * Es decir, nos permite conocer toda la información
+ * de Fallecimiento de la BD para utilizara en la
+ * vista.
  * 
  * @author a-valderrama
  */
-public class UtilidadLayout {
+public class UtilidadFallecimiento {
     
-    static Layout comObj;
+    static Fallecimiento comObj;
     static Session sessionObj;
+    
+    /**
+     * Guarda el layout que se recibe como 
+     * parámetro la base de datos. 
+     * Con los campos previamente establecidos, 
+     * a cada uno.
+     * 
+     * @param l Objeto de tipo fallecimiento a  
+     *          guardar en la base de datos.
+     */
+    public void save(Fallecimiento l) {
+        try {
+            sessionObj = HibernateUtil.getSessionFactory().openSession();
+            sessionObj.beginTransaction();
+            sessionObj.save(l);
+            sessionObj.getTransaction().commit();
+        } catch (Exception sqlException) {
+            if (null != sessionObj.getTransaction()) {
+                System.out.println("\n.......Transaction Is Being Rolled Back.......");
+                sessionObj.getTransaction().rollback();
+            }
+            sqlException.printStackTrace();
+        } finally {
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
+        }
+    }
     
     /**
      * Esta clase nos permite conocer la información en la 
      * tabla "layout" correspondiente a cierto id de envío.
      * 
-     * @return List<Layout> Lista de toda la información 
-     *         del Layout filtrada por el id del envío
+     * @return Lista de toda la información del 
+     *         fallecimiento filtrada por el id del envío
      */
-    public List<Layout> getLayout (){
+    public List<Fallecimiento> getLayout (){
         
-        List<Layout> obj = null;
+        List<Fallecimiento> obj = null;
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         int idEnvio = obtenerIdEnvio();
         try{
             sessionObj.beginTransaction();
-            String hql = "FROM Layout WHERE id_envio = :idEnvio";
+            String hql = "FROM Fallecimiento WHERE id_envio = :idEnvio";
             Query query = sessionObj.createQuery(hql);
             query.setInteger("idEnvio", idEnvio);
-            obj = (List<Layout>)query.list();
+            obj = (List<Fallecimiento>)query.list();
             sessionObj.getTransaction().commit();
             if(obj.isEmpty()){
                 return null;
@@ -61,21 +91,22 @@ public class UtilidadLayout {
     }
     
     /**
-     * Método que regresa un elemento de la tabla layout
-     * de la BD con el id correspondiente.
+     * Método que regresa un elemento de la tabla de
+     * fallecimiento de la BD con el id 
+     * correspondiente.
      * 
      * @param id id del elemento buscado
      * @return el elemento buscado
      */
-    public Layout getElemento (int id){
+    public Fallecimiento getElemento (int id){
         
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         try{
             sessionObj.beginTransaction();
-            String hql = "FROM Layout WHERE id = :id";
+            String hql = "FROM Fallecimiento WHERE id = :id";
             Query query = sessionObj.createQuery(hql);
             query.setInteger("id", id);
-            Layout l = (Layout) query.uniqueResult();
+            Fallecimiento l = (Fallecimiento) query.uniqueResult();
             sessionObj.getTransaction().commit();
             return l;
         }catch(Exception sqlException){
@@ -96,14 +127,14 @@ public class UtilidadLayout {
      * Establecemos que el soporte ha sido subido al
      * id correspondiente.
      * 
-     * @param id id del layout al que se le sube el 
-     *           soporte
+     * @param id id del fallecimiento al que se le sube  
+     *           el soporte
      */
     public void setSoporte(int id){
         try {
             sessionObj = HibernateUtil.getSessionFactory().openSession();
             sessionObj.beginTransaction();
-            String hql = "UPDATE Layout l SET l.soporte= true WHERE l.id= :id";
+            String hql = "UPDATE Fallecimiento f SET f.soporte= true WHERE f.id= :id";
             Query query = sessionObj.createQuery(hql);
             query.setInteger("id", id);
             query.executeUpdate();
@@ -129,10 +160,10 @@ public class UtilidadLayout {
     private int obtenerIdEnvio(){
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         sessionObj.beginTransaction();
-        String hql = "FROM Layout ORDER BY id DESC";
+        String hql = "FROM Fallecimiento ORDER BY id DESC";
         Query query = sessionObj.createQuery(hql);
         query.setMaxResults(1);
-        Layout last = (Layout) query.uniqueResult();
+        Fallecimiento last = (Fallecimiento) query.uniqueResult();
         sessionObj.getTransaction().commit();
         return last.getId_envio();
     }

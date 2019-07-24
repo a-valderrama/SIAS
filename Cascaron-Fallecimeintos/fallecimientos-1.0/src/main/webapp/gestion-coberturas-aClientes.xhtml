@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>SIAS-Coberturas</title>
         <link rel = "stylesheet" href = "resources/css/baseUsuarioIH.css" />
-        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'></link>
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'/>
+        
         <script type="text/javascript">
             function start(){
                 renderDate();
                 renderTime();
             }
         </script>
-        
     </h:head>
         <img id="logo_fonacot" src="resources/css/fonacot.jpg" width="130" height="37"/>
         <img id="logo_sias_usuario" src="resources/css/logo.png" width="110" height="45"/>
@@ -29,7 +31,7 @@
             <p class="sias">Sistema Integral de Administración del Seguro de Crédito del FONACOT</p>
         </div>
         <div class="seccion">
-            Gestión de Coberturas > Reclamos por fallecimiento, invalidez e incapacidad
+            Gestión de Coberturas > Reclamos de Atención a Clientes
         </div>
         <div class="link_cobertura">
             <a id="ref" href="gestion-coberturas.xhtml" >Gestión de Coberturas</a>
@@ -83,17 +85,11 @@
                 </p:panelMenu>
             </h:form>
             
-            <h:form id="analista2" rendered="#{display.esAnalista2()}">
+            <h:form id="analista3" rendered="#{display.esAnalista3()}">
                 <p:panelMenu class="menuitem" >
                     <p:submenu label="Gestión de Coberturas" >
-                        <p:submenu label="Reclamos por fallecimiento,&#10;invalidez e incapacidad" 
-                                   style="white-space: pre;">
-                            <p:menuitem value="Cargar Layout" icon="ui-icon-radio-off"
-                                        action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/> 
-                            <p:menuitem value="Cargar soporte &#10;documental" icon="ui-icon-radio-off"
-                                        style="white-space: pre;"
-                                        action="gestion-coberturas-fii_soporte.xhtml?faces-redirect=true"/> 
-                        </p:submenu>
+                        <p:menuitem value="Reclamos de Atención&#10; a clientes" icon="ui-icon-radio-off"
+                                    style="white-space: pre;" action="gestion-coberturas-aClientes.xhtml?faces-redirect=true"/> 
                         <p:submenu label="Reportes">
                             <p:submenu label="Reportes inf. seguros">
                                 <p:menuitem value="Reporte por envío" icon="ui-icon-radio-off"/>
@@ -106,7 +102,7 @@
         
         <h:form id="sube_archivo">
             <p class="descripcion" ><i class='fas fa-angle-right'></i>  Cargar archivo (layout) para integrar
-                reclamos por la cobertura de fallecimientos,<br/>   invalidez e incapacidad:
+                reclamos identificados a través del Centro de<br/>    Atención a Clientes:
             </p>
         </h:form>
         
@@ -121,13 +117,13 @@
                           sizeLimit="500000" class="upload" update="error_layout exito" />
         </h:form>
         
-        <p:dialog widgetVar="io_error" showEffect="fade" resizable="true" modal="true">
+        <p:dialog id="error_raro" widgetVar="io_error" showEffect="fade" resizable="true" modal="true">
              <h:form>
                 <h:outputText value="Algo salió mal... Intente de nuevo."/>
                 <br/>
                 <br/>
                 <div align="center">
-                    <p:commandButton value="Continuar" action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/>
+                    <p:commandButton value="Continuar" onclick="PF('error_raro').hide()"/>
                 </div>
             </h:form>
         </p:dialog>
@@ -138,7 +134,7 @@
                 <br/>
                 <br/>
                 <div align="center">
-                    <p:commandButton value="Continuar" action="gestion-coberturas-fii_soporte.xhmtl?faces-redirect=true"/>
+                    <p:commandButton value="Continuar" action="modulos.xhmtl?faces-redirect=true"/>
                 </div>
             </h:form>
         </p:dialog>
@@ -182,7 +178,7 @@
                 <br/>
                 <br/>
                 <div align="center"> 
-                    <p:commandButton value="Continuar" action="gestion-coberturas-fii.xhmtl?faces-redirect=true"/>
+                    <p:commandButton value="Continuar" onclick="PF('formato_incorrecto_bd').hide()"/>
                 </div>
             </h:form>
         </p:dialog>

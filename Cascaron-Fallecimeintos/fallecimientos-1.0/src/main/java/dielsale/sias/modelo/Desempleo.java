@@ -14,16 +14,16 @@ import javax.persistence.Table;
 
 /**
  * Esta clase la usamos para tener acceso a los 
- * atributos del layout, de fallecimientos, desde 
- * la vista. Pero además definimos las columnas 
- * de la base de datos que se va a leer. Así 
- * como el nombre de la tabla.
+ * atributos del layout, de desempleo, desde la
+ * vista. Pero además definimos las columnas de
+ * la base de datos que se va a leer. Así como
+ * el nombre de la tabla.
  * 
  * @author a-valderrama
  */
 @Entity
-@Table(catalog = "SIAS", schema = "public", name = "fallecimiento")
-public class Fallecimiento {
+@Table(catalog = "SIAS", schema = "public", name = "desempleo")
+public class Desempleo {
     
     @Id
     @Column(name = "id")

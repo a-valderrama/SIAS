@@ -5,34 +5,37 @@
  */
 package dielsale.sias.modelo;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos,
- * y viceversa, utilizando las queries de hibernate.
- * Es decir, nos permite conocer toda la información de la 
- * Bitacora de la BD.
+ * Esta clase nos permite mapear la vista a la base
+ * de datos, y viceversa, utilizando las queries 
+ * de hibernate.
+ * Es decir, nos permite conocer toda la información
+ * de Atencion de la BD para utilizara en la
+ * vista.
  * 
  * @author a-valderrama
  */
-public class UtilidadBitacora {
+public class UtilidadAtencion {
     
-    static Fallecimiento comObj;
+    static Atencion comObj;
     static Session sessionObj;
     
     /**
-     * Registra en la bitácora el nuevo acceso de 
-     * un usuario.
+     * Guarda el layout que se recibe como 
+     * parámetro la base de datos. 
+     * Con los campos previamente establecidos, 
+     * a cada uno.
      * 
-     * @param nuevoRegistro El nuevo registro a poner 
-     *                      en la bitácora
+     * @param a Objeto de tipo Atencion a guardar 
+     *          en la base de datos.
      */
-    public void actualizaAcceso(Bitacora nuevoRegistro){
+    public void save(Atencion a) {
         try {
             sessionObj = HibernateUtil.getSessionFactory().openSession();
             sessionObj.beginTransaction();
-            sessionObj.save(nuevoRegistro);
+            sessionObj.save(a);
             sessionObj.getTransaction().commit();
         } catch (Exception sqlException) {
             if (null != sessionObj.getTransaction()) {

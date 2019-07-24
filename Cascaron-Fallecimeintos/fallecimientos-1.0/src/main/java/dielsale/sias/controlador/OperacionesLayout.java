@@ -5,8 +5,8 @@
  */
 package dielsale.sias.controlador;
 
-import dielsale.sias.modelo.Layout;
-import dielsale.sias.modelo.UtilidadLayout;
+import dielsale.sias.modelo.Fallecimiento;
+import dielsale.sias.modelo.UtilidadFallecimiento;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -24,7 +24,7 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class OperacionesLayout {
     
-    UtilidadLayout u = new UtilidadLayout();
+    UtilidadFallecimiento u = new UtilidadFallecimiento();
     
     /**
      * Método que nos regresa los datos del layout en
@@ -32,21 +32,21 @@ public class OperacionesLayout {
      * 
      * @return List<Layout> datos del layout en la BD.
      */
-    public List<Layout> getLayout(){
-        List<Layout> layout = u.getLayout();
+    public List<Fallecimiento> getLayout(){
+        List<Fallecimiento> layout = u.getLayout();
         return layout;
     }
     
     /**
-     * Este método regresa un objeto de tipo Layout de la
-     * BD filtrado por su id.
-     * EL id del Layout es del que se quiere adjuntar un 
-     * soporte, y se obtiene del session-map.
+     * Este método regresa un objeto de tipo Fallecimiento de la
+ BD filtrado por su id.
+     * EL id del Fallecimiento es del que se quiere adjuntar un 
+ soporte, y se obtiene del session-map.
      * 
-     * @return Layout elemento filtrado por su id.
+     * @return Fallecimiento elemento filtrado por su id.
      */
-    public dielsale.sias.modelo.Layout getElementoSoporte(){
-        dielsale.sias.modelo.Layout elemento = u.getElemento(getIdElemento());
+    public dielsale.sias.modelo.Fallecimiento getElementoSoporte(){
+        dielsale.sias.modelo.Fallecimiento elemento = u.getElemento(getIdElemento());
         return elemento;
     }
     
