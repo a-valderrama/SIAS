@@ -5,6 +5,10 @@
  */
 package dielsale.sias.controlador;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Esta clase la usamos para tener acceso a los 
  * atributos del usuario desde la vista

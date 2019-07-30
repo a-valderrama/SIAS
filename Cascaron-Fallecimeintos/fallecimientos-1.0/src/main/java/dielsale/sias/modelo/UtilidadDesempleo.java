@@ -5,6 +5,9 @@
  */
 package dielsale.sias.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -19,7 +22,7 @@ import org.hibernate.Session;
  */
 public class UtilidadDesempleo {
     
-    static Atencion comObj;
+    static Desempleo comObj;
     static Session sessionObj;
     
     /**
@@ -48,5 +51,81 @@ public class UtilidadDesempleo {
                 sessionObj.close();
             }
         }
+    }
+    
+    /**
+     * Método que nos regresa todos los idEnvios
+     * existentes para el archvio de Desempleo
+     * a clientes
+     * 
+     * @return Todos los idEnvios existentes en 
+     *         la base de datos.
+     */
+    public List<Integer> getIdEnvios(){
+        List<Integer> obj = null;
+        sessionObj = HibernateUtil.getSessionFactory().openSession();
+
+        try{
+            sessionObj.beginTransaction();
+            String hql = "SELECT id_envio FROM Desempleo";
+            Query query = sessionObj.createQuery(hql);
+            obj = (List<Integer>)query.list();
+            sessionObj.getTransaction().commit();
+            if(obj.isEmpty()){
+                return null;
+            }else{
+                return obj;
+            }
+        }catch(Exception sqlException){
+            if (null != sessionObj.getTransaction()) {
+                System.out.println("\n.......ERROOOOOOOOOOOR.......");
+                sessionObj.getTransaction().rollback();
+            }
+            sqlException.printStackTrace();
+        }finally{
+            if (sessionObj != null) {
+                sessionObj.close();
+            }            
+        } 
+        return null;
+    }
+    
+    /**
+     * Método que nos regresa todos los registros
+     * existentes bajo un idEnvio específico
+     * 
+     * @param idEnvio id envío en cuestión
+     * @return Todos todos los registros
+     *         existentes bajo un idEnvio 
+     *         específico.
+     */
+    public ArrayList<Desempleo> getRegistros(int idEnvio){
+        ArrayList<Desempleo> obj = null;
+        sessionObj = HibernateUtil.getSessionFactory().openSession();
+
+        try{
+            sessionObj.beginTransaction();
+            String hql = "FROM Desempleo WHERE id_envio = :idEnvio";
+            Query query = sessionObj.createQuery(hql);
+            query.setInteger("idEnvio", idEnvio);
+            obj = (ArrayList<Desempleo>)query.list();
+            sessionObj.getTransaction().commit();
+            if(obj.isEmpty()){
+                return null;
+            }else{
+                return obj;
+            }
+        }catch(Exception sqlException){
+            if (null != sessionObj.getTransaction()) {
+                System.out.println("\n.......ERROOOOOOOOOOOR.......");
+                sessionObj.getTransaction().rollback();
+            }
+            sqlException.printStackTrace();
+        }finally{
+            if (sessionObj != null) {
+                sessionObj.close();
+            }            
+        } 
+        return null;
     }
 }

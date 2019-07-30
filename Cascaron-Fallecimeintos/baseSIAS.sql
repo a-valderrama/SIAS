@@ -197,6 +197,7 @@ CREATE TABLE integrado(
 	max_r_pagadas int,
 	actuales int,
 	soporte boolean DEFAULT false,
+	cerrado boolean DEFAULT false,
 	CONSTRAINT "PK_integrado" PRIMARY KEY (id)
 );
 

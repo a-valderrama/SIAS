@@ -18,6 +18,7 @@
     <mapping class="dielsale.sias.modelo.Atencion" file="" jar="" package="" resource=""/>
     <mapping class="dielsale.sias.modelo.Desempleo" file="" jar="" package="" resource=""/>
     <mapping class="dielsale.sias.modelo.Bitacora" file="" jar="" package="" resource=""/>
+    <mapping class="dielsale.sias.modelo.Integrado" file="" jar="" package="" resource=""/>
     <mapping class="dielsale.sias.modelo.Acceso" file="" jar="" package="" resource=""/>
   </session-factory>
 </hibernate-configuration>

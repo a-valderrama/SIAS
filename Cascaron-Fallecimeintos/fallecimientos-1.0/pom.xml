@@ -151,9 +151,9 @@
             <configuration>
                 <path>/SIAS</path>
             </configuration>
-		</plugin>
+        </plugin>
+        
     </plugins>
-    
   </build>
 </project>
 

@@ -7,11 +7,37 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>SIAS-Coberturas</title>
         <link rel = "stylesheet" href = "resources/css/baseUsuarioIH.css" />
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        
+        <style>
+            .panel{
+                position: absolute;
+                top: 195px;
+                left: 350px;
+                width: 700px !important;
+            }
+            
+            i{
+                position: relative;
+                font-size:40px !important; 
+                color:#6c84d6;
+                top: 9px;
+            }
+            
+            .integrar{
+                background-color: #70a3ca !important;
+            }
+            
+            .ui-panel-titlebar{
+                background-color: #70a3ca !important;
+            }
+        </style>
         
         <script type="text/javascript">
             function start(){
@@ -31,7 +57,7 @@ and open the template in the editor.
             <p class="sias">Sistema Integral de Administración del Seguro de Crédito del FONACOT</p>
         </div>
         <div class="seccion">
-            Gestión de Coberturas > Reclamos Desempleo
+            Gestión de Coberturas > Itegrar reclamo
         </div>
         <div class="link_cobertura">
             <a id="ref" href="gestion-coberturas.xhtml" >Gestión de Coberturas</a>
@@ -106,88 +132,105 @@ and open the template in the editor.
             </h:form>
         </div>
         
-        <h:form id="sube_archivo">
-            <p class="descripcion" ><i class='fas fa-angle-right'></i>  Cargar archivo (layout) para integrar
-                reclamos identificados a través del Centro de<br/>    Atención a Clientes:
-            </p>
+        <h:form id="integracion">
+            <p:messages>
+                <p:autoUpdate />
+            </p:messages>
+            <p:panel class="panel" header="Selecciona los id a integrar" style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="d" value="Desempelo: " />
+                    <p:selectOneMenu id="d" value="#{integrar.idDesempleo}" style="width:150px">
+                        <f:selectItem itemLabel="Selecciona uno" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{integrar.getAtencionEnvios()}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="a" value="Atención a Cliente: " />
+                    <p:selectOneMenu id="a" value="#{integrar.idAtencion}" style="width:150px">
+                        <f:selectItem itemLabel="Selecciona uno" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{integrar.getDesempleoEnvios()}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="f" value="Fallecimiento: " />
+                    <p:selectOneMenu id="f" value="#{integrar.idFallecimiento}" style="width:150px">
+                        <f:selectItem itemLabel="Selecciona uno" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{integrar.getFallecimientoEnvios()}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton value="Integrar" class="integrar" icon="fa fa-check" 
+                                 action="#{integrar.integrar()}" update="rep_exito"/>
+            </p:panel>
         </h:form>
         
-        <h:form enctype="multipart/form-data" >
-            <p:growl id="messages" showDetail="true" />
-            <p:fileUpload value="#{uploadFile.file}" mode="advanced"
-                          fileUploadListener="#{uploadFile.handleFileUpload}" 
-                          dragDropSupport="true" fileLimit="1" allowTypes="/(\.|\/)(csv)$/" 
-                          label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" 
-                          fileLimitMessage="Ha excedido el límite de archivos (1)" 
-                          invalidFileMessage="No se encontró el formato correcto (.csv) en:"
-                          sizeLimit="500000" class="upload" update="error_layout exito" />
-        </h:form>
-        
-        <p:dialog id="error_raro" widgetVar="io_error" showEffect="fade" resizable="true" modal="true">
-             <h:form>
-                <h:outputText value="Algo salió mal... Intente de nuevo."/>
+        <p:dialog widgetVar="no_match" closable="false" modal="true" >
+            <h:form>
+                <h:outputText value="Los valores deben coincidir. En el caso que&lt;br /&gt; 
+                              no exista el valor, dejar la opción por default."
+                              escape="false"/>
                 <br/>
                 <br/>
                 <div align="center">
-                    <p:commandButton value="Continuar" onclick="PF('error_raro').hide()"/>
+                    <p:commandButton value="Intentar de nuevo" onclick="PF('no_match').hide()" />
                 </div>
             </h:form>
         </p:dialog>
         
-        <p:dialog id="exito" widgetVar="exitoso" showEffect="fade" closable="false" resizable="true" modal="true">
-             <h:form>
-                <h:outputText value="#{uploadFile.getNumRegistros()}"/>
+        <p:dialog widgetVar="nin_valido" closable="false" modal="true" >
+            <h:form>
+                <h:outputText value="Se debe escoger al menos una opción válida."/>
                 <br/>
                 <br/>
                 <div align="center">
-                    <p:commandButton value="Continuar" action="modulos.xhmtl?faces-redirect=true"/>
+                    <p:commandButton value="Intentar de nuevo" onclick="PF('nin_valido').hide()" />
                 </div>
             </h:form>
         </p:dialog>
         
-        <p:dialog id="error_layout" widgetVar="formato_incorrecto" showEffect="fade" closable="false" 
+        <p:dialog id="rep_exito" widgetVar="rep" showEffect="fade" closable="false" 
                   resizable="true" modal="true" width="1000">
             <h:form>
-                <h:outputText value="Existen registros que no tienen la estructura requerida"/>
+                <h:outputText value="Existen registros duplicados en la integración"/>
                 <br/>
                 <br/>
-                <p:dataTable var="err" value="#{uploadFile.getErroresLayout()}" 
+                <p:dataTable var="rep" value="#{mensajeIntegrado.getRep()}" 
                              styleClass = "tablaFiltrada" scrollable="true" scrollHeight="350" 
                              rowHover="true" rowStyleClass="renglones">
                     <p:column headerText="Id Crédito">
                         <div align="center">
-                            #{err.idCredito}
+                            #{rep.idCredito}
                         </div>
                     </p:column>
-                    <p:column headerText="Renglon">
+                    <p:column headerText="Id Trabajador">
                         <div align="center">
-                            #{err.renglon}
+                            #{rep.idTrabajador}
                         </div>
                     </p:column>
-                    <p:column headerText="Columna">
+                    <p:column headerText="Fuente">
                         <div align="center">
-                            #{err.columna}
+                            #{rep.fuente}
                         </div>
                     </p:column>
                 </p:dataTable>
                 
                 <div align="center"> 
-                    <p:commandButton value="Intentar de nuevo" onclick="PF('error_layout').hide()"/>
+                    <p:commandButton value="Continuar" action="modulos.xhtml?faces-redirect=true"/>
                 </div>
             </h:form>
         </p:dialog>
         
-        <p:dialog widgetVar="formato_incorrecto_bd" showEffect="fade" closable="false" resizable="true" modal="true">
-             <h:form>
-                <h:outputText value="Hubo un problema con la base de datos. &lt;br /&gt; 
-                                     Por favor intente de nuevo." escape="false"/>
+        <p:dialog widgetVar="no_rep" closable="false" modal="true" >
+            <h:form>
+                <h:outputText value="Se han integrado exitosamente los archivos.&lt;br /&gt;
+                                    No se han encontrado registros duplicados."
+                                    escape="false"/>
                 <br/>
                 <br/>
-                <div align="center"> 
-                    <p:commandButton value="Continuar" onclick="PF('formato_incorrecto_bd').hide()"/>
+                <div align="center">
+                    <p:commandButton value="Continuar" action="modulos.xhtml?faces-redirect=true"/>
                 </div>
             </h:form>
         </p:dialog>
-        
     </h:body>
 </html>

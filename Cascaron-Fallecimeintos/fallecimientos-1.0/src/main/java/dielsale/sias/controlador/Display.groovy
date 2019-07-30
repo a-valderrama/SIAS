@@ -17,7 +17,7 @@ import javax.faces.bean.SessionScoped
 @SessionScoped
 class Display {
     
-    IniciaSesion i = new IniciaSesion()
+    private def i = new IniciaSesion()
     
     /**
      * Nos dice si el usuario logeado puede, o 

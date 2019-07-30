@@ -68,13 +68,13 @@ public class UploadFile {
      *              archivo, en la vista, por el usuario
      */
     public void handleFileUpload(FileUploadEvent event) {
-        RequestContext rContext = RequestContext.getCurrentInstance();
-        FacesContext context = FacesContext.getCurrentInstance();
         //archivo actual
         file = event.getFile();
         //Mensaje de import exitoso
         String archivoExitoso = "Archivo: " + file.getFileName() + ", cargado exitosamente.";
-        context.getExternalContext().getSessionMap().put("archivo", archivoExitoso);
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        FacesContext fContext =  FacesContext.getCurrentInstance();
+        fContext.getExternalContext().getSessionMap().put("archivo", archivoExitoso);
         //generamos la dirección donde se guardará
         String rutaString = "/home/dielsale/Documentos/SIAS-Colab/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Fii";
         File directorio = new File(rutaString);
@@ -96,11 +96,11 @@ public class UploadFile {
             /*Validamos y guardamos los datos con un script de groovy*/
             CargaDatos carga = new CargaDatos();
             ArrayList<ErrorLayout> errores = carga.validaDatos(f);
-            context.getExternalContext().getSessionMap().put("errores", errores);
+            fContext.getExternalContext().getSessionMap().put("errores", errores);
             int numRegistros = carga.getNumRegistros();
             String mensajeRegistros = "Se han cargado " + carga.getNumRegistros() + " registros exitosamente";
-            context.getExternalContext().getSessionMap().put("mensajeRegistros", mensajeRegistros);
-            context.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
+            fContext.getExternalContext().getSessionMap().put("mensajeRegistros", mensajeRegistros);
+            fContext.getExternalContext().getSessionMap().put("numRegistros", numRegistros);
             if(!errores.isEmpty()){
                 rContext.execute("PF('formato_incorrecto').show()");
                 return;
@@ -120,8 +120,8 @@ public class UploadFile {
      *         cargados a la base.
      */
     public String getNumRegistros(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        return (String)context.getExternalContext().getSessionMap().get("mensajeRegistros");
+        FacesContext fContext =  FacesContext.getCurrentInstance();
+        return (String)fContext.getExternalContext().getSessionMap().get("mensajeRegistros");
     }
 
     
@@ -135,8 +135,8 @@ public class UploadFile {
      *         método, del botón. 
      */
     public String seleccionaSoporte(int id){
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getSessionMap().put("id_layout", id);
+        FacesContext fContext =  FacesContext.getCurrentInstance();
+        fContext.getExternalContext().getSessionMap().put("id_layout", id);
         return "gestion-coberturas-fii_subir_soporte.xhmtl?faces-redirect=true";
     }
     
@@ -153,7 +153,7 @@ public class UploadFile {
      *              archivo, en la vista, por el usuario.
      */
     public void soporte(FileUploadEvent event) {
-        RequestContext context = RequestContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
         file = event.getFile();
         //Ruta en la que se guardaran los soportes documentales
         String rutaString = "/home/dielsale/Documentos/SIAS/Cascaron-Fallecimeintos/fallecimientos-1.0/src/resources/UploadedFiles/Soporte";
@@ -174,13 +174,13 @@ public class UploadFile {
             if(b){
                 Path ruta = f.toPath();
                 Files.copy(contenido, ruta, StandardCopyOption.REPLACE_EXISTING);
-                context.execute("PF('exitoso').show()");
+                rContext.execute("PF('exitoso').show()");
                 u.setSoporte(id);
             }else{
-                context.execute("PF('ya_existe').show()");
+                rContext.execute("PF('ya_existe').show()");
             }
         }catch (IOException e) {
-            context.execute("PF('error').show()");
+            rContext.execute("PF('error').show()");
         }
     }
     
@@ -193,8 +193,8 @@ public class UploadFile {
      *         a los campos del layout.
      */
     public ArrayList<ErrorLayout> getErroresLayout(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        ArrayList<ErrorLayout> errores = (ArrayList<ErrorLayout>)context.getExternalContext().getSessionMap().get("errores");
+        FacesContext fContext =  FacesContext.getCurrentInstance();
+        ArrayList<ErrorLayout> errores = (ArrayList<ErrorLayout>)fContext.getExternalContext().getSessionMap().get("errores");
         return errores;
     }
     
@@ -202,8 +202,8 @@ public class UploadFile {
      * Regresa el id del elemento del layout en custión
      */
     private int getIdElemento(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        int id = (int)context.getExternalContext().getSessionMap().get("id_layout");
+        FacesContext fContext =  FacesContext.getCurrentInstance();
+        int id = (int)fContext.getExternalContext().getSessionMap().get("id_layout");
         return id;
     }
     
