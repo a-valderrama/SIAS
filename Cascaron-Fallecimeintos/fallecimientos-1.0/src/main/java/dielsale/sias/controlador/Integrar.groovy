@@ -15,6 +15,7 @@ import dielsale.sias.modelo.Desempleo
 import dielsale.sias.modelo.Fallecimiento
 import dielsale.sias.modelo.Fallecimiento
 import dielsale.sias.modelo.Integrado
+import dielsale.sias.modelo.Repetidos
 import java.util.HashSet
 import java.util.Set
 import javax.faces.bean.ManagedBean
@@ -26,7 +27,7 @@ import javax.faces.bean.SessionScoped
  * máximo 3, que se encuentren en la base
  * de datos con el mismo idEnvío
  *
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @ManagedBean
 @SessionScoped
@@ -75,8 +76,13 @@ class Integrar {
      * @return Todos los enviois en la base de datos
      */
     public Set<Integer> getAtencionEnvios(){
-        def Set<Integer> envios = new HashSet<Integer>(uAtencion.getIdEnvios());
-        return envios;
+        def Set<Integer> envios = new HashSet<Integer>()
+        def aux = uAtencion.getIdEnvios()
+        if(aux == null){
+            return envios
+        }
+        envios = new HashSet<Integer>(aux)
+        return envios
     }
     
     /**
@@ -87,8 +93,13 @@ class Integrar {
      * @return Todos los enviois en la base de datos
      */
     public Set<Integer> getDesempleoEnvios(){
-        def Set<Integer> envios = new HashSet<Integer>(uDesempleo.getIdEnvios());
-        return envios;
+        def Set<Integer> envios = new HashSet<Integer>()
+        def aux = uDesempleo.getIdEnvios()
+        if(aux == null){
+            return envios
+        }
+        envios = new HashSet<Integer>(aux)
+        return envios
     }
     
     /**
@@ -99,8 +110,13 @@ class Integrar {
      * @return Todos los enviois en la base de datos
      */
     public Set<Integer> getFallecimientoEnvios(){
-        def Set<Integer> envios = new HashSet<Integer>(uFallecimiento.getIdEnvios());
-        return envios;
+        def Set<Integer> envios = new HashSet<Integer>()
+        def aux = uFallecimiento.getIdEnvios()
+        if(aux == null){
+            return envios
+        }
+        envios = new HashSet<Integer>(aux)
+        return envios
     }
     
     /**
@@ -489,13 +505,14 @@ class Integrar {
     
     /*
      * Agrega a la lista de repetidos los repetidos 
-     * existentes en el archivo de Desempleo
+     * existentes en el archivo de Fallecimientos
      */
     private ArrayList<Repetidos> checkFallecimientos(ArrayList<Repetidos> repetidos){
         hashFallecimientos.each{ key, value ->
             if(hashAtenciones.containsKey(key) && hashDesempleados.containsKey(key)){
                 value.setFuente("Desempleados, Atención a Clientes, Fallecimientos")
                 repetidos.add(value)
+                //borramos el elemeto repetido para solo reportar 1 vez
                 borraDesempleoAten(key)
                 return
             }
@@ -517,13 +534,14 @@ class Integrar {
     
     /*
      * Agrega a la lista de repetidos los repetidos 
-     * existentes en el archivo de Desempleo
+     * existentes en el archivo de Atencion a Cliente
      */
     private ArrayList<Repetidos> checkAtenciones(ArrayList<Repetidos> repetidos){
         hashAtenciones.each{ key, value ->
             if(hashDesempleados.containsKey(key) && hashFallecimientos.containsKey(key)){
                 value.setFuente("Desempleados, Atención a Clientes, Fallecimientos")
                 repetidos.add(value)
+                //borramos el elemeto repetido para solo reportar 1 vez
                 borraDesempleoFalle(key)
                 return
             }
@@ -543,7 +561,9 @@ class Integrar {
         return repetidos
     }
     
-    
+    /*
+     * Integra solo el documento de Desempleo 
+     */
     private void integraDesempleo (int idDesempleo){
         def desempleados = uDesempleo.getRegistros(idDesempleo)
         desempleados.each{ d->
@@ -551,7 +571,9 @@ class Integrar {
         }
     }
     
-    
+    /*
+     * Integra solo el documento de Fallecimiento 
+     */
     private void integraFallecimiento (int idFallecimiento){
         def fallecimientos = uFallecimiento.getRegistros(idFallecimiento)
         fallecimientos.each{ f->
@@ -559,7 +581,10 @@ class Integrar {
         }
     }
     
-    
+    /*
+     * Integra solo el documento de Atencion a 
+     * Clientes.
+     */
     private void integraAtencion (int idAtencion){
         def atenciones = uAtencion.getRegistros(idAtencion)
         atenciones.each{ a->

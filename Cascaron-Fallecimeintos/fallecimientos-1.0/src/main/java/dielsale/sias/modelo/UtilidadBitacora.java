@@ -5,16 +5,16 @@
  */
 package dielsale.sias.modelo;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos,
- * y viceversa, utilizando las queries de hibernate.
- * Es decir, nos permite conocer toda la información de la 
- * Bitacora de la BD.
+ * Esta clase nos permite mapear la vista a la 
+ * base de datos, y viceversa, utilizando las 
+ * queries de hibernate. 
+ * Es decir, nos permite conocer toda la 
+ * información de la  Bitacora de la BD.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadBitacora {
     

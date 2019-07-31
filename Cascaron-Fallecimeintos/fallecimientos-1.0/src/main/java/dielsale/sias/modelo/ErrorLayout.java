@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dielsale.sias.controlador;
+package dielsale.sias.modelo;
 
 /**
  * Clase con la que estableceremos la ubicación 
  * de los errores, sintácticos, del layout
  * cargado.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class ErrorLayout {
     

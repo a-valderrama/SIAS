@@ -5,6 +5,7 @@
  */
 package dielsale.sias.controlador;
 
+import dielsale.sias.modelo.Repetidos;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -12,8 +13,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
- *
- * @author dielsale
+ * Muestra los mensajes correspondientes a la 
+ * funcionalidad de integrar los reclamos.
+ * 
+ * @author Alejandro Valderrama para Dielsale
  */
 
 @ManagedBean

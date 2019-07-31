@@ -5,18 +5,17 @@
  */
 package dielsale.sias.modelo;
 
-import static dielsale.sias.modelo.UtilidadFallecimiento.sessionObj;
-import java.util.ArrayList;
-import java.util.List;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Realiza los joins necesarios para integrar
- * los archvios que ya haya escogido el 
- * usuario.
+ * Esta clase nos permite mapear la vista a la base
+ * de datos, y viceversa, utilizando las queries 
+ * de hibernate.
+ * Es decir, nos permite conocer toda la información
+ * de Integrado de la BD para utilizara en la
+ * vista.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadIntegrado {
     
@@ -47,35 +46,5 @@ public class UtilidadIntegrado {
                 sessionObj.close();
             }
         }
-    }
-    
-    
-    public ArrayList<Integrado> getIntegrados (int idEnvio){
-        ArrayList<Integrado> obj = null;
-        sessionObj = HibernateUtil.getSessionFactory().openSession();
-        try{
-            sessionObj.beginTransaction();
-            String hql = "FROM Integrado WHERE id_envio = :idEnvio";
-            Query query = sessionObj.createQuery(hql);
-            query.setInteger("idEnvio", idEnvio);
-            obj = (ArrayList<Integrado>)query.list();
-            sessionObj.getTransaction().commit();
-            if(obj.isEmpty()){
-                return null;
-            }else{
-                return obj;
-            }
-        }catch(Exception sqlException){
-            if (null != sessionObj.getTransaction()) {
-                System.out.println("\n.......ERROOOOOOOOOOOR.......");
-                sessionObj.getTransaction().rollback();
-            }
-            sqlException.printStackTrace();
-        }finally{
-            if (sessionObj != null) {
-                sessionObj.close();
-            }            
-        } 
-        return null;
     }
 }

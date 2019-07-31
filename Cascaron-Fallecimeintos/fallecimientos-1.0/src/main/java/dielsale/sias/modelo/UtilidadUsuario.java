@@ -9,12 +9,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos, 
- * y viceversa, utilizando las queries de hibernate.
- * Es decir, nos da todas las utilidades necesarias
- * que deben tener los usuarios en la vista.
+ *Esta clase nos permite mapear la vista a la base
+ * de datos, y viceversa, utilizando las queries 
+ * de hibernate.
+ * Es decir, nos permite conocer toda la información
+ * de Usuario de la BD para utilizara en la
+ * vista.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadUsuario {
     
@@ -26,7 +28,7 @@ public class UtilidadUsuario {
      * usuario, pasado como parámetro, en la base de datos
      * 
      * @param usuario Nombre del usuario que buscamos
-     * @return Usuario wrapper completo del usuario
+     * @return Usuario, wrapper completo del usuario
      */
     public Usuario buscaPorUsuario(String usuario) {
         try {

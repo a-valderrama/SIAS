@@ -15,9 +15,9 @@ import javax.faces.context.FacesContext;
 /**
  * Esta clase nos pertmitirá cerrar sesión
  * desde la vista. Básicamente se quita del 
- * contexto el tipo de usuario logeado,
+ * contexto el tipo de usuario logeado.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @ManagedBean
 @RequestScoped

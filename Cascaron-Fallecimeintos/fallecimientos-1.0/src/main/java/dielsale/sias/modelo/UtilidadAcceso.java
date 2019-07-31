@@ -9,12 +9,13 @@ import static dielsale.sias.modelo.UtilidadBitacora.sessionObj;
 import org.hibernate.Query;
 
 /**
- * Esta clase nos permite mapear la vista a la base de datos,
- * y viceversa, utilizando las queries de hibernate.
- * Es decir, nos permite conocer toda la información de los 
- Acceso en la BD.
+ * Esta clase nos permite mapear la vista a la base 
+ * de datos, y viceversa, utilizando las queries 
+ * de hibernate. 
+ * Es decir, nos permite conocer toda la información 
+ * de los accesos en la BD.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadAcceso {
     
@@ -115,8 +116,8 @@ public class UtilidadAcceso {
      * 
      * @param usuario Usuario que realizó un intento
      *                fallido
-     * @return int    El número de intentos del 
-     *                usuario
+     * @return El número de intentos del 
+     *         usuario
      */
     public int getIntentos (String usuario){
         try {

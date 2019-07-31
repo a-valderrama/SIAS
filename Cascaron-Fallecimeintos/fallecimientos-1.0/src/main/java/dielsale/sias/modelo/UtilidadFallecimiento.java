@@ -18,7 +18,7 @@ import org.hibernate.Session;
  * de Fallecimiento de la BD para utilizara en la
  * vista.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadFallecimiento {
     
@@ -54,8 +54,8 @@ public class UtilidadFallecimiento {
     }
     
     /**
-     * Esta clase nos permite conocer la información en la 
-     * tabla fallecimiento correspondiente al último
+     * Esta clase nos permite conocer la información en  
+     * la tabla fallecimiento correspondiente al último
      * idEnvio registrado en la base de datos.
      * 
      * @return Lista de toda la información del 
@@ -168,7 +168,7 @@ public class UtilidadFallecimiento {
 
         try{
             sessionObj.beginTransaction();
-            String hql = "SELECT id_envio FROM Atencion";
+            String hql = "SELECT id_envio FROM Fallecimiento";
             Query query = sessionObj.createQuery(hql);
             obj = (List<Integer>)query.list();
             sessionObj.getTransaction().commit();

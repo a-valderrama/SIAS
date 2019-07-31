@@ -18,7 +18,7 @@ import org.hibernate.Session;
  * de Desempleo de la BD para utilizara en la
  * vista.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 public class UtilidadDesempleo {
     

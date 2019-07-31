@@ -100,6 +100,7 @@ public class IniciaSesion {
                 //Actualizamos las tablas del acceso 
                 actualiza.acceso(nombreUsuario);
                 actualiza.setHoraDeshabilitado(nombreUsuario, "");
+                actualiza.restableceIntentos(nombreUsuario);
                 try{
                     TimeUnit.SECONDS.sleep(3);
                 }catch(InterruptedException e){

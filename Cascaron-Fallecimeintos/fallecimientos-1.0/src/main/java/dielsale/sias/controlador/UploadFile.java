@@ -5,6 +5,7 @@
  */
 package dielsale.sias.controlador;
 
+import dielsale.sias.modelo.ErrorLayout;
 import dielsale.sias.modelo.UtilidadFallecimiento;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import org.primefaces.model.UploadedFile;
  * que ver cuando un usuario sube un archivo. En
  * cualquiera de las vistas.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @ManagedBean
 @SessionScoped
@@ -131,8 +132,8 @@ public class UploadFile {
      * un archivo posteriormente
      * 
      * @param id id del elemento seleccionado
-     * @return String cadena para la acción, posterior al 
-     *         método, del botón. 
+     * @return Acción a realizar, posterior al 
+     *         método, por el botón. 
      */
     public String seleccionaSoporte(int id){
         FacesContext fContext =  FacesContext.getCurrentInstance();

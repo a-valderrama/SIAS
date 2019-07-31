@@ -18,7 +18,7 @@ import javax.faces.context.FacesContext;
  * la tabla mostrada en la vista: 
  * gestion-coberturas-fii_soporte.xhtml
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @ManagedBean
 @RequestScoped
@@ -39,11 +39,11 @@ public class OperacionesLayout {
     
     /**
      * Este método regresa un objeto de tipo Fallecimiento de la
- BD filtrado por su id.
-     * EL id del Fallecimiento es del que se quiere adjuntar un 
- soporte, y se obtiene del session-map.
+     * BD filtrado por su id.
+     * El id del Fallecimiento es del que se quiere adjuntar un 
+     * soporte.
      * 
-     * @return Fallecimiento elemento filtrado por su id.
+     * @return Elemento filtrado por su id.
      */
     public dielsale.sias.modelo.Fallecimiento getElementoSoporte(){
         dielsale.sias.modelo.Fallecimiento elemento = u.getElemento(getIdElemento());

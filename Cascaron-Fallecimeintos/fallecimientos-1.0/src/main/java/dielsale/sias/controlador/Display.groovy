@@ -10,8 +10,12 @@ import javax.faces.bean.ManagedBean
 import javax.faces.bean.SessionScoped
 
 /**
+ * Esta clase realiza las verificaciones 
+ * necesarias para que la vista muestre 
+ * la información pertinente a los 
+ * usuarios logeados.
  *
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @ManagedBean
 @SessionScoped

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * de datos que se va a leer. Así como el nombre 
  * de la tabla.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @Entity
 @Table(catalog = "SIAS", schema = "public", name = "accesos")

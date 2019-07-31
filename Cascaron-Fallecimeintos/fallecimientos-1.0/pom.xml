@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.dielsale.sias</groupId>
-  <artifactId>fallecimientos-1.0</artifactId>
+  <artifactId>SIAS-Dielsale-1.0</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>fallecimientos-1.0 Maven Webapp</name>
+  <name>SIAS-Dielsale-1.0 Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <dependencies>

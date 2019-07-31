@@ -19,7 +19,7 @@ import java.time.LocalTime
  * registros en la bitácora (BD), así como 
  * los intentos de acceso fallidos 
  *
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 class Actualiza {
     
@@ -67,9 +67,9 @@ class Actualiza {
      *
      * @param String El usuario que ha realizado
      *               los intentos
-     * @return int   La cantidad de intentos que 
-     *               están registrados en el 
-     *               sistema.
+     * @return La cantidad de intentos que 
+     *         están registrados en el 
+     *         sistema.
      */
     public int getIntentos (String usuario){
         return uAccesos.getIntentos(usuario) 
@@ -77,11 +77,13 @@ class Actualiza {
     
     /**
      * Restablece la cantidad de intentos de acceso 
-     * fallidos a tenido el usuario al sistema.
+     * fallidos a tenido el usuario al sistema. Y 
+     * establece la deshabilitación de la cuenta
+     * por accesos incorrectos.
      *
      * @param String El usuario que ha realizado
      *               los intentos
-     * @return 2     Si lla se cometieron 2 
+     * @return 2     Si ya se cometieron 2 
      *               errores, es decir se bloqueo
      *               la cuenta
      *         1     En otro caso
@@ -98,6 +100,17 @@ class Actualiza {
         LocalDateTime acceso = LocalDateTime.now()
         uAccesos.setHoraDeshabilitado(usuario, acceso as String)
         return 1
+    }
+    
+    /**
+     * Restablece los intentos de accesos del
+     * usuario a cero.
+     * 
+     * @para String El usuario al que se le 
+     *              restablecerán los intentos.
+     */
+    public void restableceIntentos (String usuario){
+        uAccesos.resetIntentos(usuario)
     }
     
     /**
@@ -119,7 +132,7 @@ class Actualiza {
      *
      * @param String  El usuario del cual queremos
      *                verificar el deshabilito.
-     * @return String Hora del deshabilito.
+     * @return Hora del deshabilito.
      */
     public String getHoraDeshabilitado (String usuario){
         return uAccesos.getHoraDeshabilitado(usuario)

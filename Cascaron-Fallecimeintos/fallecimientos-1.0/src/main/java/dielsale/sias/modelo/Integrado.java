@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * de la base de datos que se va a leer. Así 
  * como el nombre de la tabla.
  * 
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 @Entity
 @Table(catalog = "SIAS", schema = "public", name = "integrado")
@@ -137,6 +137,9 @@ public class Integrado {
 
     @Column(name = "soporte")
     private boolean soporte;
+    
+    @Column(name = "cerrado")
+    private boolean cerrado;
     
     public int getId() {
         return id;
@@ -432,5 +435,13 @@ public class Integrado {
 
     public void setSoporte(boolean soporte) {
         this.soporte = soporte;
+    }
+
+    public boolean isCerrado() {
+        return cerrado;
+    }
+
+    public void setCerrado(boolean cerrado) {
+        this.cerrado = cerrado;
     }
 }

@@ -10,6 +10,7 @@ import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import dielsale.sias.modelo.Atencion
 import dielsale.sias.modelo.Desempleo
+import dielsale.sias.modelo.ErrorLayout
 import dielsale.sias.modelo.Fallecimiento
 import dielsale.sias.modelo.UtilidadAtencion
 import dielsale.sias.modelo.UtilidadDesempleo
@@ -20,8 +21,14 @@ import javax.faces.context.FacesContext
 import org.primefaces.model.UploadedFile
 
 /**
+ * Esta clase se encarga de hacer las 
+ * validaciones a los registros del archivo
+ * subido por el usuario. 
+ * En caso de que todos sean correctos carga
+ * la información del archivo a la table 
+ * correspondiente
  *
- * @author a-valderrama
+ * @author Alejandro Valderrama para Dielsale
  */
 class CargaDatos {
     
